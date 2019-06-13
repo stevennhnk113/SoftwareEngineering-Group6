@@ -86,4 +86,19 @@ public class UserController {
         userRepository.deleteAll();
         return ResponseEntity.ok().build();
     }
+    
+    @PostMapping("/user/login")
+    public String loginUser(@RequestBody User user) {
+    	// Get all the user
+    	// userRepository.findAll()
+    	
+    	//Find the user with that user name
+    	//Then check if the password match
+    	
+    	// if match, return true with the user information
+    	
+    	// If not match, return false with null
+    	
+    	return "user logged in";
+    }
 }
