@@ -1,5 +1,6 @@
 package com.Group6.ScheduleMe.Controller;
 
+import com.Group6.ScheduleMe.Entities.LoginForm;
 import com.Group6.ScheduleMe.Entities.User;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.UserRepository;
@@ -88,9 +89,11 @@ public class UserController {
     }
     
     @PostMapping("/user/login")
-    public String loginUser(@RequestBody User user) {
+    public User loginUser(@RequestBody LoginForm loginForm ) {
     	// Get all the user
     	// userRepository.findAll()
+    	User user = userRepository.findByUsername(loginForm.getUsername())
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "username", loginForm.getUsername()));
     	
     	//Find the user with that user name
     	//Then check if the password match
@@ -99,6 +102,6 @@ public class UserController {
     	
     	// If not match, return false with null
     	
-    	return "user logged in";
+    	return user;
     }
 }
