@@ -4,25 +4,30 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // eslint-disable-next-line
 import { FacebookLoginButton } from "react-social-login-buttons";
 
-export class LoginView extends React.Component {
-    _registerButtonPress;
+export class RegisterView extends React.Component {
     _loginButtonPress;
+    _registerButtonPress;
 
     constructor(props) {
         super();
 
         this._loginButtonPress = props.loginButtonPress;
-        this._registerButtonPress = props.registerButtonPress;
+        this._registerButtonPress = props._registerButtonPress;
     }
 
     render() {
         return (
-            <Form className="login-form text-center">
+            <Form className="register-form text-center">
                 <h1>
                     <span clasName="font-weight-bold">HR Scheduling System </span>
                 </h1>
 
-                <h2 className="text-center">Welcome</h2>
+                <h2 className="text-center">Register</h2>
+
+                <FormGroup >
+                    <Label> Full Name </Label>
+                    <Input type="text" placeholder="Full name" />
+                </FormGroup>
 
                 <FormGroup>
                     <Label> Email </Label>

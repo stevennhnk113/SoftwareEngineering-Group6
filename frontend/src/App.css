@@ -38,3 +38,18 @@
   padding: 15px;
   margin: auto;
 }
+
+.register-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+}
+
+.firstName {
+  margin-right: 1%;
+}
+
+.lastName {
+  margin-left: 1%;
+}
