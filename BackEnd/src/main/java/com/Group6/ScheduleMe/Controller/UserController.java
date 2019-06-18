@@ -92,16 +92,26 @@ public class UserController {
     public User loginUser(@RequestBody LoginForm loginForm ) {
     	// Get all the user
     	// userRepository.findAll()
+    	//Find the user with that user name
     	User user = userRepository.findByUsername(loginForm.getUsername())
     			.orElseThrow(() -> new ResourceNotFoundException("User", "username", loginForm.getUsername()));
     	
-    	//Find the user with that user name
-    	//Then check if the password match
     	
+    	
+    		
+     	//Then check if the password match
     	// if match, return true with the user information
-    	
+    	if (loginForm.getPassword().equals(user.getPassword()))
+    	{
+    		return user;
+    	}
+    	else
+    	{
+    		return null;
+    	}
     	// If not match, return false with null
     	
-    	return user;
+    	
+    
     }
 }
