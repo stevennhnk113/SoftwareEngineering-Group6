@@ -24,7 +24,15 @@ export class LoginView extends React.Component {
                             <span clasName="font-weight-bold">HR Scheduling System </span>
                         </h1>
 
-                        <h2 className="text-center">User Profile</h2>
+                        <h2>User Profile</h2>
+
+                        <div class="card">
+
+                            <h1>Name</h1>
+                            <p class="title">Position</p>
+                            <p>@username</p>
+
+                        </div>
 
 
                     </Form>
