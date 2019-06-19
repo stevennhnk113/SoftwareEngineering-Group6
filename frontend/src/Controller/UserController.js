@@ -2,6 +2,8 @@ import { BaseController } from "./BaseController";
 import { IsUsingMockData } from "../config";
 
 class UserController extends BaseController {
+	_UserId = "";
+
 	async GetUserByID(id) {
 		if (IsUsingMockData) {
 			var item = null;
@@ -43,6 +45,13 @@ class UserController extends BaseController {
 		}
 	}
 
+	async GetUser() {
+		console.log("/api/user/" + this._UserId);
+		var restApi = "/api/user/" + this._UserId;
+
+		return this.Get(restApi);
+	}
+
 	async UserLogin(username, password)
 	{
 		var restApi = "/api/user/login";
@@ -52,7 +61,13 @@ class UserController extends BaseController {
 			password: password
 		};
 
-		return this.Post(restApi, payload);
+		var user = await this.Post(restApi, payload);
+		console.log(user);
+		if(user != null) {
+			this._UserId = user.id;
+		}
+
+		return user;
 	}
 }
 

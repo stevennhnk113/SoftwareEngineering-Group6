@@ -9,12 +9,12 @@ import App from "../App";
 export class LoginView extends React.Component {
 	_registerButtonPress;
 	
-	_loginButtonPress() {
+	async _loginButtonPress() {
 		console.log("hello");
 
 		if(this.state.Username === "" || this.state.Password === "") return false;
 
-		var user = UsercontrollerObj.UserLogin(this.state.Username, this.state.Password);
+		var user = await UsercontrollerObj.UserLogin(this.state.Username, this.state.Password);
 
 		if(user != null) {
 			App.changeToHomeView();
