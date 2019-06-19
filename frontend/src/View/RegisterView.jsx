@@ -88,7 +88,7 @@ export class RegisterView extends React.Component {
                         <Button onClick={() => this._loginButtonPress()} className="btn-lg btn-dark btn-block">Login</Button>
                         <Button onClick={() => this._registerButtonPress()} className="btn-lg btn-dark btn-block">Register</Button>
 
-                        <div className="social text-center">
+                        {/* <div className="social text-center">
                             Or continue with your social account
                         </div>
 
@@ -99,7 +99,7 @@ export class RegisterView extends React.Component {
                             <a href="/sign-up">Sign up</a>
                             <span className="p-2">|</span>
                             <a href="/forgot-password">Forgot Password</a>
-                        </div>
+                        </div> */}
                     </Form>
                 </div>
             </div>
