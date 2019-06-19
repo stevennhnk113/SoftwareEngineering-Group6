@@ -4,15 +4,35 @@ var request = require("request");
 
 export class BaseController {
 	async Get(restApi) {
-		var response = await fetch(ServerString + restApi);
+		console.log(ServerString + restApi);
 
-		if (!this.IsSuccessful(response)) return null;
+		var options = {
+			method: 'GET',
+			url: ServerString + restApi,
+			headers:
+			{
+				'cache-control': 'no-cache',
+				'Content-Type': 'application/json',
+			},
+			json: true
+		};
 
-		var data = await response.json();
-		return data;
+		return new Promise((resolve, reject) => {
+			request(options, function (error, response, body) {
+				if (error){
+					console.log(error);
+					resolve(null);
+				}
+
+				console.log(body.userName);
+				console.log(body);
+
+				resolve(body);
+			});
+		});
 	}
 
-	async Post(restApi, payload) {
+	Post(restApi, payload) {
 		console.log(ServerString + restApi);
 
 		var options = {
@@ -30,11 +50,12 @@ export class BaseController {
 
 		return new Promise((resolve, reject) => {
 			request(options, function (error, response, body) {
-				if (error) resolve(null);
+				if (error){
+					console.log(error);
+					resolve(null);
+				}
 
-				if(body.status !== 200) resolve(null);
-
-				return body;
+				resolve(body);
 			});
 		});
 	}
