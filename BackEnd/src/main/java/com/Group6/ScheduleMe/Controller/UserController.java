@@ -101,11 +101,7 @@ public class UserController {
     		
      	//Then check if the password match
     	// if match, return true with the user information
-<<<<<<< HEAD
-    	if (loginForm.getPassword().equals("Password"))
-=======
     	if (loginForm.getPassword().equals(user.getPassword()))
->>>>>>> 1ec5e89e95c61691c2cb3e8bce7f926586f4aa60
     	{
     		return user;
     	}
