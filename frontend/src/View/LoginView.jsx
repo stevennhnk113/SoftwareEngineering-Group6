@@ -27,14 +27,14 @@ export class LoginView extends React.Component {
                         <h2 className="text-center">Welcome</h2>
 
                         <div className="email">
-                            <label htmlFor="email">Email</label>
+                            <label htmlFor="email">Username</label>
                             <input
                                 //className={formErrors.email.length > 0 ? "error" : null}
-                                placeholder="Email"
+                                placeholder="Username"
                                 type="email"
-                                name="email"
+                                name="Username"
                                 noValidate
-                                onChange={this.handleChange}
+                                onChange={() => this.setState({})}
                             />
                             {/* {formErrors.email.length > 0 && (
                                 <span className="errorMessage">{formErrors.email}</span>
