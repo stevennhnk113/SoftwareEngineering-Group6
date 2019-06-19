@@ -3,15 +3,33 @@ import React from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // eslint-disable-next-line
 import { FacebookLoginButton } from "react-social-login-buttons";
+import UsercontrollerObj from "../Controller/UserController";
+import App from "../App";
 
 export class LoginView extends React.Component {
-    _registerButtonPress;
-    _loginButtonPress;
+	_registerButtonPress;
+	
+	_loginButtonPress() {
+		console.log("hello");
+
+		if(this.state.Username === "" || this.state.Password === "") return false;
+
+		var user = UsercontrollerObj.UserLogin(this.state.Username, this.state.Password);
+
+		if(user != null) {
+			App.changeToHomeView();
+		}
+	}
 
     constructor(props) {
         super();
 
-        this._loginButtonPress = props.loginButtonPress;
+		this.state = {
+			Username: "",
+			Password: ""
+		}
+
+        this._loginButtonPress = this._loginButtonPress.bind(this);
         this._registerButtonPress = props.registerButtonPress;
     }
 
@@ -34,7 +52,7 @@ export class LoginView extends React.Component {
                                 type="email"
                                 name="Username"
                                 noValidate
-                                onChange={() => this.setState({})}
+                                onChange={(e) => this.setState({Username: e.currentTarget.value})}
                             />
                             {/* {formErrors.email.length > 0 && (
                                 <span className="errorMessage">{formErrors.email}</span>
@@ -49,7 +67,7 @@ export class LoginView extends React.Component {
                                 type="password"
                                 name="password"
                                 noValidate
-                                onChange={this.handleChange}
+                                onChange={(e) => this.setState({Password: e.currentTarget.value})}
                             />
                             {/* {formErrors.password.length > 0 && (
                                 <span className="errorMessage">{formErrors.password}</span>

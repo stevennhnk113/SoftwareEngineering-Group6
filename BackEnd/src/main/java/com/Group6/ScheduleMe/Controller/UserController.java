@@ -88,6 +88,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/user/login")
     public User loginUser(@RequestBody LoginForm loginForm ) {
     	// Get all the user

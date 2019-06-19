@@ -3,51 +3,69 @@ import "./App.css";
 
 import { LoginView } from "./View/LoginView";
 import { RegisterView } from "./View/RegisterView";
+import { HomeView } from "./View/HomeView";
+import { UserProfileView } from "./View/UserProfileView";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currentView: "Login"
-    }
+	constructor() {
+		super();
+		this.state = {
+			currentView: "Login"
+		}
 
-    this.changeToRegisterView = this.changeToRegisterView.bind(this);
-    this.changeToLoginView = this.changeToLoginView.bind(this);
-  }
+		this.changeToRegisterView = this.changeToRegisterView.bind(this);
+		this.changeToLoginView = this.changeToLoginView.bind(this);
 
-  changeToRegisterView() {
-    this.setState({ currentView: "Register" });
-  }
+		App.changeToHomeView = App.changeToHomeView.bind(this);
+		App.changeToProfileView = App.changeToProfileView.bind(this);
+	}
 
-  changeToLoginView() {
-    this.setState({ currentView: "Login" });
-  }
+	changeToRegisterView() {
+		this.setState({ currentView: "Register" });
+	}
 
-  render() {
-    var renderComponent = null;
-    switch (this.state.currentView) {
-      case "Login":
-        renderComponent = (
-          <LoginView
-            loginButtonPress={this.changeToLoginView}
-            registerButtonPress={this.changeToRegisterView}>
-          </LoginView>);
+	static changeToHomeView() {
+		this.setState({ currentView: "Home" });
+	}
 
-        break;
-      case "Register":
-        renderComponent = (
-          <RegisterView
-            loginButtonPress={this.changeToLoginView}
-            registerButtonPress={this.changeToRegisterView}>
-          </RegisterView>);
-        break;
-      default:
-        renderComponent = (<LoginView></LoginView>);
-        break;
-    }
+	static changeToProfileView() {
+		this.setState({ currentView: "UserProfile" });
+	}
 
-    return renderComponent;
-  }
+	changeToLoginView() {
+		this.setState({ currentView: "Login" });
+	}
+
+	render() {
+		var renderComponent = null;
+		switch (this.state.currentView) {
+			case "UserProfile":
+				renderComponent = (<UserProfileView></UserProfileView>)
+				break;
+			case "Home":
+				renderComponent = (<HomeView></HomeView>)
+				break;
+			case "Login":
+				renderComponent = (
+					<LoginView
+						registerButtonPress={this.changeToRegisterView}>
+					</LoginView>);
+
+				break;
+			case "Register":
+				renderComponent = (
+					<RegisterView
+						loginButtonPress={this.changeToLoginView}
+						registerButtonPress={this.changeToRegisterView}>
+					</RegisterView>);
+				break;
+			default:
+				renderComponent = (<LoginView></LoginView>);
+				break;
+		}
+
+		return renderComponent;
+	}
 }
 
 export default App;
