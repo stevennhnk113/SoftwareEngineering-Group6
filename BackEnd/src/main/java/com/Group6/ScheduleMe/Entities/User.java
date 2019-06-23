@@ -17,7 +17,7 @@ import java.util.Date;
             })
         })
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt", "Password"}, 
         allowGetters = true)
 public class User {
     @Id
