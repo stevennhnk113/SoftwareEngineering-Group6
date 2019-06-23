@@ -60,7 +60,7 @@ public class UserController {
     
     @CrossOrigin
     @GetMapping("/user/{position}")
-    public User getUserByPosition(@PathVariable(value = "position") String position) {
+    public List<User> getUserByPosition(@PathVariable(value = "position") String position) {
     	// Return list of Position
 
     	return null;
