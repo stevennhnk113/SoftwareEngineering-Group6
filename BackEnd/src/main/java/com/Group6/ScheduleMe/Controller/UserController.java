@@ -58,6 +58,14 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
     }
     
+    @CrossOrigin
+    @GetMapping("/user/{position}")
+    public User getUserByPosition(@PathVariable(value = "position") String position) {
+    	// Return list of Position
+
+    	return null;
+    }
+    
     // Update a Note
     @CrossOrigin
     @PutMapping("/user/{id}")
