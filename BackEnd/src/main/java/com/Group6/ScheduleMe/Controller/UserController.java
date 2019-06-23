@@ -2,6 +2,7 @@ package com.Group6.ScheduleMe.Controller;
 
 import com.Group6.ScheduleMe.Entities.LoginForm;
 import com.Group6.ScheduleMe.Entities.User;
+import com.Group6.ScheduleMe.Entities.Position;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.UserRepository;
 
@@ -118,7 +119,13 @@ public class UserController {
     	}
     	// If not match, return false with null
     	
-    	
+    }
     
+    @CrossOrigin
+    @GetMapping("/user/positions")
+    public List<Position> userPositions() {
+    	// Return list of Position
+
+    	return null;
     }
 }

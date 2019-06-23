@@ -1,6 +1,6 @@
 package com.Group6.ScheduleMe.Entities;
 
-enum Position {
+public enum Position {
 	Manager(1, "Manager"), Employee(2, "Employee");
 	
 	private String _PositionName;
