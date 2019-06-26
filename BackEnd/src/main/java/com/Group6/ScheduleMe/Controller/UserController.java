@@ -131,7 +131,7 @@ public class UserController {
     
     @CrossOrigin
     @GetMapping("/user/positions")
-    public List<Position> userPositions() {
+    public List<String> userPositions() {
     	// Return list of Position
 
     	return null;
