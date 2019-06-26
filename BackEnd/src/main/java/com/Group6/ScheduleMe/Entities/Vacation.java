@@ -16,6 +16,12 @@ import java.util.Date;
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
         allowGetters = true)
 public class Vacation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false, updatable = false)
+    @JsonProperty("id")
+    private Long id;
+    
     @NotBlank
     private Date StartTime;
     
