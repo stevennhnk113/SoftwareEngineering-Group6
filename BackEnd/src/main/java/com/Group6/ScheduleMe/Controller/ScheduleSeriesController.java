@@ -27,31 +27,31 @@ ScheduleSeriesRepository scheduleseriesRepository;
     
     Logger logger = LoggerFactory.getLogger(this.getClass());
     
-    @GetMapping("/scedules")
+    @GetMapping("/sceduleseries")
     public List<EventSeries> getAllScheduleseries() {
         return scheduleseriesRepository.findAll();
 }
  // Create a new Schedule
-    @PostMapping("/schedule")
+    @PostMapping("/scheduleseries")
     public EventSeries createSchedule(@Valid @RequestBody EventSeries eventSeries) {
         EventSeries savedScheduleSeries = scheduleseriesRepository.save(eventSeries);
         return savedScheduleSeries;
     }
     
     // Get a Single Schedule
-    @GetMapping("/schedule/{id}")
-    public EventSeries getUserById(@PathVariable(value = "id") Long scheduleId) {
-        return scheduleseriesRepository.findById(scheduleId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleId));
+    @GetMapping("/scheduleseries/{id}")
+    public EventSeries getUserById(@PathVariable(value = "id") Long scheduleseriesId) {
+        return scheduleseriesRepository.findById(scheduleseriesId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleseriesId));
     }
     
     // Update a Note
-    @PutMapping("/schedule/{id}")
-    public EventSeries updateSchedule(@PathVariable(value = "id") Long scheduleId,
+    @PutMapping("/scheduleseries/{id}")
+    public EventSeries updateSchedule(@PathVariable(value = "id") Long scheduleseriesId,
                                             @Valid @RequestBody EventSeries scheduleDetails) {
 
-    	EventSeries scheduleSeries = scheduleseriesRepository.findById(scheduleId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleId));
+    	EventSeries scheduleSeries = scheduleseriesRepository.findById(scheduleseriesId)
+                .orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
 
     	scheduleSeries.setRepeatEvery(scheduleDetails.getRepeatEvery());
     	scheduleSeries.setRepeatWeekly(scheduleDetails.getRepeatWeekly());
@@ -61,10 +61,10 @@ ScheduleSeriesRepository scheduleseriesRepository;
     }
     
     // Delete a Schedule
-    @DeleteMapping("/schedule/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long userId) {
-        EventSeries scheduleseries = scheduleseriesRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", userId));
+    @DeleteMapping("/scheduleseries/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long scheduleseriesId) {
+        EventSeries scheduleseries = scheduleseriesRepository.findById(scheduleseriesId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleseriesId));
 
         scheduleseriesRepository.delete(scheduleseries);
 
@@ -72,7 +72,7 @@ ScheduleSeriesRepository scheduleseriesRepository;
     }
     
     // Delete  Schedule
-    @DeleteMapping("/schedules")
+    @DeleteMapping("/scheduleseries")
     public ResponseEntity<?> deleteAllSchedules() {
         scheduleseriesRepository.deleteAll();
         return ResponseEntity.ok().build();

@@ -60,9 +60,9 @@ public class ScheduleController {
     
     // Delete a Schedule
     @DeleteMapping("/schedule/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long userId) {
-        Schedule schedule = scheduleRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", userId));
+    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleId));
 
         scheduleRepository.delete(schedule);
 
