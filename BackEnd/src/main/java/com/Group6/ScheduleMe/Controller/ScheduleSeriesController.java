@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,21 +14,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.Group6.ScheduleMe.Entities.EventSeries;
-import com.Group6.ScheduleMe.Entities.Schedule;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.ScheduleSeriesRepository;
 
-
+@RestController
+@RequestMapping("/api")
 public class ScheduleSeriesController {
 
-	
+	@Autowired
 ScheduleSeriesRepository scheduleseriesRepository;
     
     Logger logger = LoggerFactory.getLogger(this.getClass());
     
-    @GetMapping("/sceduleseries")
+    @GetMapping("/sceduleseriess")
     public List<EventSeries> getAllScheduleseries() {
         return scheduleseriesRepository.findAll();
 }
@@ -42,7 +45,7 @@ ScheduleSeriesRepository scheduleseriesRepository;
     @GetMapping("/scheduleseries/{id}")
     public EventSeries getUserById(@PathVariable(value = "id") Long scheduleseriesId) {
         return scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleseriesId));
+                .orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
     }
     
     // Update a Note
