@@ -8,6 +8,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +36,10 @@ public class EventSeries {
 	    @JsonProperty("id")
 	private long id;
 	
+	  @OneToOne
+	    @JoinColumn(name ="FK_ScheduleSeriesid")
+	  private Schedule schedule;
+	  
 	  @NotBlank
 	private String RepeatEvery ="weekly";
 	@NotBlank

@@ -1,13 +1,17 @@
 package com.Group6.ScheduleMe.Entities;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,25 +38,28 @@ public class Schedule {
     @JsonProperty("id")
     private long id;
     
-//	@NotBlank
+    @NotBlank
 	private Date StartTime;
 
-//	@NotBlank
-private Date EndTime;
+    @NotBlank
+    private Date EndTime;
 
 	
-private String ScheduleDetail;
+    private String ScheduleDetail;
 
-//@NotBlank
-private String ScheduleType;
+    @NotBlank
+    private String ScheduleType;
 
-//@NotBlank
-private long ScheduleFor;
+    @NotBlank
+    private long ScheduleFor;
 
-//@NotBlank
-private long ScheduleBy;
-
-private long ScheduleSeriesid;
+    @NotBlank
+    private long ScheduleBy;
+    @OneToOne(mappedBy="ScheduleSeriesid", cascade = CascadeType.ALL)
+    Set eventSeries = new HashSet();
+ 
+    @NotBlank
+    private long ScheduleSeriesid;
 
 @Column(nullable = false, updatable = false)
 @Temporal(TemporalType.TIMESTAMP)

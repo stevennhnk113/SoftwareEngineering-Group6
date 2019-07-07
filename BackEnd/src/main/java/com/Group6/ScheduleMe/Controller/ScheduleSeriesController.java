@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Group6.ScheduleMe.Entities.EventSeries;
+import com.Group6.ScheduleMe.Entities.LoginForm;
+import com.Group6.ScheduleMe.Entities.ScheduleForm;
+import com.Group6.ScheduleMe.Entities.User;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.ScheduleSeriesRepository;
 
@@ -26,14 +29,15 @@ import com.Group6.ScheduleMe.Repository.ScheduleSeriesRepository;
 public class ScheduleSeriesController {
 
 	@Autowired
-ScheduleSeriesRepository scheduleseriesRepository;
+    ScheduleSeriesRepository scheduleseriesRepository;
     
     Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @GetMapping("/sceduleseriess")
-    public List<EventSeries> getAllScheduleseries() {
+    public List<EventSeries> getAllScheduleSeries() {
         return scheduleseriesRepository.findAll();
 }
+    
  // Create a new Schedule
     @PostMapping("/scheduleseries")
     public EventSeries createSchedule(@Valid @RequestBody EventSeries eventSeries) {
@@ -45,7 +49,7 @@ ScheduleSeriesRepository scheduleseriesRepository;
     @GetMapping("/scheduleseries/{id}")
     public EventSeries getUserById(@PathVariable(value = "id") Long scheduleseriesId) {
         return scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
+                .orElseThrow(() -> new ResourceNotFoundException("EventSeries", "id", scheduleseriesId));
     }
     
     // Update a Note
@@ -54,7 +58,7 @@ ScheduleSeriesRepository scheduleseriesRepository;
                                             @Valid @RequestBody EventSeries scheduleDetails) {
 
     	EventSeries scheduleSeries = scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
+                .orElseThrow(() -> new ResourceNotFoundException("EventSeries", "id", scheduleseriesId));
 
     	scheduleSeries.setRepeatEvery(scheduleDetails.getRepeatEvery());
     	scheduleSeries.setRepeatWeekly(scheduleDetails.getRepeatWeekly());
@@ -67,7 +71,7 @@ ScheduleSeriesRepository scheduleseriesRepository;
     @DeleteMapping("/scheduleseries/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long scheduleseriesId) {
         EventSeries scheduleseries = scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", scheduleseriesId));
+                .orElseThrow(() -> new ResourceNotFoundException("EventSeries", "id", scheduleseriesId));
 
         scheduleseriesRepository.delete(scheduleseries);
 
@@ -82,4 +86,15 @@ ScheduleSeriesRepository scheduleseriesRepository;
     }
 	
 	
-}
+	    @PostMapping("/scheduleseries/scheduleform")
+    public EventSeries scheduleRepo(@RequestBody ScheduleForm schedForm ) {
+    	
+    	EventSeries scheduleseries = scheduleseriesRepository.findById(schedForm.getScheduleSeriesid())
+    			.orElseThrow(() -> new ResourceNotFoundException("EventSeries", "ScheduleSeriesid", schedForm.getScheduleSeriesid()));
+    	
+    	
+    		return null;
+    	}
+    }
+	 
+

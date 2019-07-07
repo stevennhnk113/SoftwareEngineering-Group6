@@ -12,5 +12,5 @@ import com.Group6.ScheduleMe.Entities.EventSeries;
 public interface ScheduleSeriesRepository extends JpaRepository<EventSeries, Long>{
 	
 	@Query(value = "SELECT s1 FROM scheduleseries s1 WHERE s1.id = ?1", nativeQuery = false)
-	Optional<EventSeries> findById(Long id);
+	Optional<EventSeries> findByid(long id);
 }
