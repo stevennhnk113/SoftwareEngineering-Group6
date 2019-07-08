@@ -52,6 +52,10 @@ class UserController extends BaseController {
 		return this.Get(restApi);
 	}
 
+	async GetAllUsers() {
+		
+	}
+
 	async UserLogin(username, password)
 	{
 		var restApi = "/api/user/login";
