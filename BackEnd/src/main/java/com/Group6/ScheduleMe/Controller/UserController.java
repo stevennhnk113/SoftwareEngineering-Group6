@@ -112,28 +112,15 @@ public class UserController {
     	User user = userRepository.findByUsername(loginForm.getUsername())
     			.orElseThrow(() -> new ResourceNotFoundException("User", "username", loginForm.getUsername()));
     	
-    	
-    	
-    		
-     	//Then check if the password match
+    	//Then check if the password match
     	// if match, return true with the user information
     	if (loginForm.getPassword().equals(user.getPassword()))
-    	{
-    		return user;
+   	{
+	           return user;
     	}
     	else
     	{
     		return null;
-    	}
-    	// If not match, return false with null
-    	
-    }
-    
-    @CrossOrigin
-    @GetMapping("/user/positions")
-    public List<String> userPositions() {
-    	// Return list of Position
-
-    	return null;
+    	}    	
     }
 }
