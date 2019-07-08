@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Group6.ScheduleMe.Entities.EventSeries;
-import com.Group6.ScheduleMe.Entities.LoginForm;
 import com.Group6.ScheduleMe.Entities.ScheduleForm;
-import com.Group6.ScheduleMe.Entities.User;
+import com.Group6.ScheduleMe.Entities.ScheduleSeries;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.ScheduleSeriesRepository;
 
@@ -29,72 +27,69 @@ import com.Group6.ScheduleMe.Repository.ScheduleSeriesRepository;
 public class ScheduleSeriesController {
 
 	@Autowired
-    ScheduleSeriesRepository scheduleseriesRepository;
-    
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-    
-    @GetMapping("/sceduleseriess")
-    public List<EventSeries> getAllScheduleSeries() {
-        return scheduleseriesRepository.findAll();
+	ScheduleSeriesRepository scheduleseriesRepository;
+
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@GetMapping("/sceduleseriess")
+	public List<ScheduleSeries> getAllScheduleSeries() {
+		return scheduleseriesRepository.findAll();
+	}
+
+	// Create a new Schedule
+	@PostMapping("/scheduleseries")
+	public ScheduleSeries createSchedule(@Valid @RequestBody ScheduleSeries eventSeries) {
+		ScheduleSeries savedScheduleSeries = scheduleseriesRepository.save(eventSeries);
+		return savedScheduleSeries;
+	}
+
+	// Get a Single Schedule
+	@GetMapping("/scheduleseries/{id}")
+	public ScheduleSeries getUserById(@PathVariable(value = "id") Long scheduleseriesId) {
+		return scheduleseriesRepository.findById(scheduleseriesId)
+				.orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
+	}
+
+	// Update a Note
+	@PutMapping("/scheduleseries/{id}")
+	public ScheduleSeries updateSchedule(@PathVariable(value = "id") Long scheduleseriesId,
+			@Valid @RequestBody ScheduleSeries scheduleDetails) {
+
+		ScheduleSeries scheduleSeries = scheduleseriesRepository.findById(scheduleseriesId)
+				.orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
+
+		scheduleSeries.setRepeatEvery(scheduleDetails.getRepeatEvery());
+		scheduleSeries.setRepeatWeekly(scheduleDetails.getRepeatWeekly());
+
+		ScheduleSeries updatedScheduleSeries = scheduleseriesRepository.save(scheduleSeries);
+		return updatedScheduleSeries;
+	}
+
+	// Delete a Schedule
+	@DeleteMapping("/scheduleseries/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long scheduleseriesId) {
+		ScheduleSeries scheduleseries = scheduleseriesRepository.findById(scheduleseriesId)
+				.orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "id", scheduleseriesId));
+
+		scheduleseriesRepository.delete(scheduleseries);
+
+		return ResponseEntity.ok().build();
+	}
+
+	// Delete Schedule
+	@DeleteMapping("/scheduleseries")
+	public ResponseEntity<?> deleteAllSchedules() {
+		scheduleseriesRepository.deleteAll();
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/scheduleseries/scheduleform")
+	public ScheduleSeries scheduleRepo(@RequestBody ScheduleForm schedForm) {
+
+		ScheduleSeries scheduleseries = scheduleseriesRepository.findById(schedForm.getScheduleSeriesid())
+				.orElseThrow(() -> new ResourceNotFoundException("ScheduleSeries", "ScheduleSeriesid",
+						schedForm.getScheduleSeriesid()));
+
+		return null;
+	}
 }
-    
- // Create a new Schedule
-    @PostMapping("/scheduleseries")
-    public EventSeries createSchedule(@Valid @RequestBody EventSeries eventSeries) {
-        EventSeries savedScheduleSeries = scheduleseriesRepository.save(eventSeries);
-        return savedScheduleSeries;
-    }
-    
-    // Get a Single Schedule
-    @GetMapping("/scheduleseries/{id}")
-    public EventSeries getUserById(@PathVariable(value = "id") Long scheduleseriesId) {
-        return scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("EventSeries", "id", scheduleseriesId));
-    }
-    
-    // Update a Note
-    @PutMapping("/scheduleseries/{id}")
-    public EventSeries updateSchedule(@PathVariable(value = "id") Long scheduleseriesId,
-                                            @Valid @RequestBody EventSeries scheduleDetails) {
-
-    	EventSeries scheduleSeries = scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("EventSeries", "id", scheduleseriesId));
-
-    	scheduleSeries.setRepeatEvery(scheduleDetails.getRepeatEvery());
-    	scheduleSeries.setRepeatWeekly(scheduleDetails.getRepeatWeekly());
-    
-    	EventSeries updatedScheduleSeries = scheduleseriesRepository.save(scheduleSeries);
-        return updatedScheduleSeries;
-    }
-    
-    // Delete a Schedule
-    @DeleteMapping("/scheduleseries/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long scheduleseriesId) {
-        EventSeries scheduleseries = scheduleseriesRepository.findById(scheduleseriesId)
-                .orElseThrow(() -> new ResourceNotFoundException("EventSeries", "id", scheduleseriesId));
-
-        scheduleseriesRepository.delete(scheduleseries);
-
-        return ResponseEntity.ok().build();
-    }
-    
-    // Delete  Schedule
-    @DeleteMapping("/scheduleseries")
-    public ResponseEntity<?> deleteAllSchedules() {
-        scheduleseriesRepository.deleteAll();
-        return ResponseEntity.ok().build();
-    }
-	
-	
-	    @PostMapping("/scheduleseries/scheduleform")
-    public EventSeries scheduleRepo(@RequestBody ScheduleForm schedForm ) {
-    	
-    	EventSeries scheduleseries = scheduleseriesRepository.findById(schedForm.getScheduleSeriesid())
-    			.orElseThrow(() -> new ResourceNotFoundException("EventSeries", "ScheduleSeriesid", schedForm.getScheduleSeriesid()));
-    	
-    	
-    		return null;
-    	}
-    }
-	 
-

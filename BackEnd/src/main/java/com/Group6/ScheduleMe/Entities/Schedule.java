@@ -1,26 +1,23 @@
 package com.Group6.ScheduleMe.Entities;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,111 +25,110 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "schedules")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
-        allowGetters = true)
-public class Schedule {	
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, updatable = false)
-    @JsonProperty("id")
-    private long id;
-    
-    @NotBlank
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
+public class Schedule {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false, updatable = false)
+	@JsonProperty("id")
+	private long id;
+
+	@NotNull(message = "Please enter StartTime")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Date StartTime;
 
-    @NotBlank
-    private Date EndTime;
+	@NotNull(message = "Please enter EndTime")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+	private Date EndTime;
 
-	
-    private String ScheduleDetail;
+	private String ScheduleDetail;
 
-    @NotBlank
-    private String ScheduleType;
+	@NotBlank
+	private String ScheduleType;
 
-    @NotBlank
-    private long ScheduleFor;
+	@NotNull(message = "Please enter scheduleFor")
+	@JsonProperty("scheduleFor")
+	private long ScheduleFor;
 
-    @NotBlank
-    private long ScheduleBy;
-    @OneToOne(mappedBy="ScheduleSeriesid", cascade = CascadeType.ALL)
-    Set eventSeries = new HashSet();
- 
-    @NotBlank
-    private long ScheduleSeriesid;
+	@NotNull(message = "Please enter scheduleBy")
+	@JsonProperty("scheduleBy")
+	private long ScheduleBy;
 
-@Column(nullable = false, updatable = false)
-@Temporal(TemporalType.TIMESTAMP)
-@CreatedDate
-private Date createdAt;
+	private long ScheduleSeriesid;
 
-@Column(nullable = false)
-@Temporal(TemporalType.TIMESTAMP)
-@LastModifiedDate
-private Date updatedAt;
+	@Column(nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
+	private Date createdAt;
 
-public Date getStartTime() {
-	return StartTime;
-}
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@LastModifiedDate
+	private Date updatedAt;
 
-public void setStartTime(Date startTime) {
-	StartTime = startTime;
-}
+	public Date getStartTime() {
+		return StartTime;
+	}
 
-public Date getEndTime() {
-	return EndTime;
-}
+	public void setStartTime(Date startTime) {
+		StartTime = startTime;
+	}
 
-public void setEndTime(Date endTime) {
-	EndTime = endTime;
-}
+	public Date getEndTime() {
+		return EndTime;
+	}
 
-public String getScheduleDetail() {
-	return ScheduleDetail;
-}
+	public void setEndTime(Date endTime) {
+		EndTime = endTime;
+	}
 
-public void setScheduleDetail(String scheduleDetail) {
-	ScheduleDetail = scheduleDetail;
-}
+	public String getScheduleDetail() {
+		return ScheduleDetail;
+	}
 
-public String getScheduleType() {
-	return ScheduleType;
-}
+	public void setScheduleDetail(String scheduleDetail) {
+		ScheduleDetail = scheduleDetail;
+	}
 
-public void setScheduleType(String scheduleType) {
-	ScheduleType = scheduleType;
-}
+	public String getScheduleType() {
+		return ScheduleType;
+	}
 
-public long getScheduleFor() {
-	return ScheduleFor;
-}
+	public void setScheduleType(String scheduleType) {
+		ScheduleType = scheduleType;
+	}
 
-public void setScheduleFor(long scheduleFor) {
-	ScheduleFor = scheduleFor;
-}
+	public long getScheduleFor() {
+		return ScheduleFor;
+	}
 
-public long getScheduleBy() {
-	return ScheduleBy;
-}
+	public void setScheduleFor(long scheduleFor) {
+		ScheduleFor = scheduleFor;
+	}
 
-public void setScheduleBy(long scheduleBy) {
-	ScheduleBy = scheduleBy;
-}
+	public long getScheduleBy() {
+		return ScheduleBy;
+	}
 
-public long getScheduleSeriesid() {
-	return ScheduleSeriesid;
-}
+	public void setScheduleBy(long scheduleBy) {
+		ScheduleBy = scheduleBy;
+	}
 
-public void setScheduleSeriesid(long scheduleSeriesid) {
-	ScheduleSeriesid = scheduleSeriesid;
-}
+	public long getScheduleSeriesid() {
+		return ScheduleSeriesid;
+	}
 
-public Date getCreatedAt() {
-	return createdAt;
-}
+	public void setScheduleSeriesid(long scheduleSeriesid) {
+		ScheduleSeriesid = scheduleSeriesid;
+	}
 
-public Date getUpdatedAt() {
-	return updatedAt;
-}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
 }
