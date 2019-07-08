@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Group6.ScheduleMe.Entities.Schedule;
+import com.Group6.ScheduleMe.Entities.ScheduleSeries;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.ScheduleRepository;
+import com.Group6.ScheduleMe.Repository.ScheduleSeriesRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +29,9 @@ public class ScheduleController {
 
 	@Autowired
 	ScheduleRepository scheduleRepository;
+
+	@Autowired
+	ScheduleSeriesRepository scheduleSeriesRepository;
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -37,13 +42,27 @@ public class ScheduleController {
 
 	// Create a new Schedule
 	@PostMapping("/schedule")
-	public Schedule createSchedule(@Valid @RequestBody Schedule schedule) {
+	public Schedule createSchedule(@RequestBody Schedule schedule) {
+		ScheduleSeries savedScheduleSeries = null;
+		if (schedule.getScheduleSeries() != null) {
+			savedScheduleSeries = scheduleSeriesRepository.save(schedule.getScheduleSeries());
+		}
+
+		if (savedScheduleSeries != null) {
+			schedule.setScheduleSeriesid(savedScheduleSeries.getId());
+		}
 		Schedule savedSchedule = scheduleRepository.save(schedule);
 		return savedSchedule;
 	}
 
+	// Get a Single Schedule by id
+	@GetMapping("/schedule/{id}")
+	public Schedule getScheduleById(@PathVariable(value = "id") Long id) {
+		return scheduleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", id));
+	}
+
 	// Get a Single Schedule
-	@GetMapping("/schedule/{ScheduleType}")
+	@GetMapping("/schedule/type/{ScheduleType}")
 	public Schedule getScheduleByType(@PathVariable(value = "ScheduleType") String scheduleType) {
 		return scheduleRepository.findByScheduleType(scheduleType)
 				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "ScheduleType", scheduleType));
@@ -66,10 +85,10 @@ public class ScheduleController {
 	}
 
 	// Delete a Schedule
-	@DeleteMapping("/schedule/{ScheduleType}")
-	public ResponseEntity<?> deleteUser(@PathVariable(value = "ScheduleType") String scheduleType) {
-		Schedule schedule = scheduleRepository.findByScheduleType(scheduleType)
-				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "ScheduleType", scheduleType));
+	@DeleteMapping("/schedule/{id}")
+	public ResponseEntity<?> deleteSchedule(@PathVariable(value = "id") Long id) {
+		Schedule schedule = scheduleRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", id));
 
 		scheduleRepository.delete(schedule);
 
@@ -82,5 +101,4 @@ public class ScheduleController {
 		scheduleRepository.deleteAll();
 		return ResponseEntity.ok().build();
 	}
-
 }

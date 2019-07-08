@@ -11,13 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,14 +32,12 @@ public class Schedule {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false, updatable = false)
 	@JsonProperty("id")
-	private long id;
+	private Long id;
 
 	@NotNull(message = "Please enter StartTime")
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Date StartTime;
 
 	@NotNull(message = "Please enter EndTime")
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Date EndTime;
 
 	private String ScheduleDetail;
@@ -56,6 +54,10 @@ public class Schedule {
 	private long ScheduleBy;
 
 	private long ScheduleSeriesid;
+
+	@Transient
+	@JsonProperty("scheduleSeries")
+	private ScheduleSeries ScheduleSeries;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -81,6 +83,14 @@ public class Schedule {
 
 	public void setEndTime(Date endTime) {
 		EndTime = endTime;
+	}
+
+	public ScheduleSeries getScheduleSeries() {
+		return ScheduleSeries;
+	}
+
+	public void setScheduleSeries(ScheduleSeries scheduleSeries) {
+		ScheduleSeries = scheduleSeries;
 	}
 
 	public String getScheduleDetail() {

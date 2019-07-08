@@ -52,6 +52,10 @@ public class ScheduleSeries {
 		return RepeatEvery;
 	}
 
+	public long getId() {
+		return id;
+	}
+
 	public void setRepeatEvery(String repeatEvery) {
 		RepeatEvery = repeatEvery;
 	}
