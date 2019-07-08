@@ -49,16 +49,12 @@ export class UserProfileView extends React.Component {
 				<div className="wrapper">
 					<div className="form-wrapper">
 						<Form noValidate>
-							<h1>
-								<span clasName="font-weight-bold">HR Scheduling System </span>
-							</h1>
-
 							<h2>User Profile</h2>
 
-							<div class="card">
+							<div className="card">
 
 								<h1>{this.state.Firstname + " " + this.state.Lastname}</h1>
-								<p class="title">{this.state.Position}</p>
+								<p className="title">{this.state.Position}</p>
 								<p>@{this.state.Username}</p>
 
 							</div>
