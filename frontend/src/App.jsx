@@ -10,7 +10,7 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			currentView: "Home"
+			currentView: "Login"
 		}
 
 		this.changeToRegisterView = this.changeToRegisterView.bind(this);

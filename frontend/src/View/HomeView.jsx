@@ -36,13 +36,11 @@ export class HomeView extends React.Component {
 		this.moveEvent = this.moveEvent.bind(this)
 	}
 
-	async componentWillMount() {
-		var scheudules = await ScheduleControllerObj.GetUserSchedule();
-
-		this.setState({ Scheudules: scheudules });
+	async componentWillMount() {		
+		await this.refreshSchedule()
 	}
 
-	moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
+	async moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
 		const { Schedules } = this.state
 
 		const idx = Schedules.indexOf(event)
@@ -54,7 +52,11 @@ export class HomeView extends React.Component {
 			allDay = false
 		}
 
+		console.log(Schedules)
+
 		const updatedEvent = { ...event, start, end, allDay }
+
+		console.log(updatedEvent)
 
 		const nextEvents = [...Schedules]
 		nextEvents.splice(idx, 1, updatedEvent)
@@ -63,7 +65,10 @@ export class HomeView extends React.Component {
 			Schedules: nextEvents,
 		})
 
-		//alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+		var toSaveSchedule = this.convertScheduleData(updatedEvent);
+		await ScheduleControllerObj.UpdateSchedule(toSaveSchedule);
+
+		this.refreshSchedule()
 	}
 
 	resizeEvent = ({ event, start, end }) => {
@@ -81,7 +86,7 @@ export class HomeView extends React.Component {
 		ScheduleControllerObj.UpdateSchedule(Schedules[idx]);
 	}
 
-	handleSelect = ({ start, end }) => {
+	handleSelect = async ({ start, end }) => {
 		var title = "Available Time";
 
 		var newSchedule = {
@@ -97,7 +102,40 @@ export class HomeView extends React.Component {
 			],
 		})
 
-		ScheduleControllerObj.CreateSchedule(newSchedule);
+		var toSaveSchedule = this.convertScheduleData(newSchedule);
+
+		await ScheduleControllerObj.CreateSchedule(toSaveSchedule);
+		await this.refreshSchedule()
+	}
+
+	convertScheduleData(calendarSchedule) {
+		var scheduleType = "Availability"
+		var scheduleFor = UsercontrollerObj._User.id
+		if(UsercontrollerObj._User.position == "Manager") {
+
+		} else {
+
+		}
+
+		var toSaveSchedule = {
+			"id": calendarSchedule.id,
+			"startTime": calendarSchedule.start.getTime(),
+			"endTime": calendarSchedule.end.getTime(),
+			"scheduleType": scheduleType,
+			"scheduleBy": UsercontrollerObj._User.id,
+			"scheduleFor": scheduleFor,
+			"scheduleDetail": ""
+		}
+
+		return toSaveSchedule;
+	}
+
+	async refreshSchedule() {
+		var scheudules = await ScheduleControllerObj.GetUserSchedule();
+
+		this.setState({ Schedules: scheudules });
+
+		console.log(this.state);
 	}
 
 	render() {

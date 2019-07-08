@@ -60,6 +60,33 @@ export class BaseController {
 		});
 	}
 
+	Put(restApi, payload) {
+		console.log(ServerString + restApi);
+
+		var options = {
+			method: 'PuT',
+			url: ServerString + restApi,
+			headers:
+			{
+				'cache-control': 'no-cache',
+				'Content-Type': 'application/json',
+			},
+			body: payload,
+			json: true,
+		};
+
+		return new Promise((resolve, reject) => {
+			request(options, function (error, response, body) {
+				if (error){
+					console.log(error);
+					resolve(null);
+				}
+
+				resolve(body);
+			});
+		});
+	}
+
 	IsSuccessful(response) {
 		return (response.status === 200) ? true : false;
 	}

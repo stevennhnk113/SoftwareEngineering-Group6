@@ -1,5 +1,5 @@
 export var IsLocalServer = true;
-export var IsUsingMockData = true;
+export var IsUsingMockData = false;
 
 function configServerUrl()
 {

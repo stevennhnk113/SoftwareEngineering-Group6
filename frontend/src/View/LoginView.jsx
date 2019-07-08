@@ -29,6 +29,19 @@ export class LoginView extends React.Component {
 			Password: ""
 		}
 
+		// Uncomment to show to professor
+		// this.state = {
+		// 	Username: "ClarieCoyle",
+		// 	Password: "ClarieCoyle123"
+		// }
+
+		this.state = {
+			Username: "CodiDe Mattia",
+			Password: "CodiDe Mattia123"
+		}
+
+		this._loginButtonPress();
+
         this._loginButtonPress = this._loginButtonPress.bind(this);
         this._registerButtonPress = props.registerButtonPress;
     }
@@ -39,7 +52,7 @@ export class LoginView extends React.Component {
                 <div className="form-wrapper">
                     <Form noValidate>
                         <h1>
-                            <span clasName="font-weight-bold">HR Scheduling System </span>
+                            <span className="font-weight-bold">HR Scheduling System </span>
                         </h1>
 
                         <h2 className="text-center">Welcome</h2>

@@ -1,63 +1,27 @@
 import { BaseController } from "./BaseController";
-import { IsUsingMockData } from "../config";
 
 class UserController extends BaseController {
 	_UserId = "";
+	_User = null;
 
 	async GetUserByID(id) {
-		if (IsUsingMockData) {
-			var item = null;
-			switch (id) {
-				case 1:
-					item = {
-						position: "Employee",
-						userName: "komalkomal",
-						firstName: "komal",
-						lastName: "komal",
-						id: 1
-					}
-					return item;
-					break;
-				case 2:
-					item = {
-						position: "Employee",
-						userName: "StevenNguyen",
-						firstName: "Steven",
-						lastName: "Nguyen",
-						id: 2
-					}
-					return item;
-					break;
-				case 3:
-					item = {
-						position: "Employee",
-						userName: "Harpreet",
-						firstName: "Harpreet",
-						lastName: "Kaur",
-						id: 3
-					}
-					return item;
-					break;
-			}
-			var restApi = "/api/user/" + id.toString();
+		var restApi = "/api/user/" + id.toString();
 
-			return this.Get(restApi);
-		}
+		this._User = await this.Get(restApi);
+		console.log(this._User);
+		return this._User;
 	}
 
-	async GetUser() {
-		console.log("/api/user/" + this._UserId);
-		var restApi = "/api/user/" + this._UserId;
-
-		return this.Get(restApi);
+	GetUser() {
+		console.log(this._User);
+		return this._User;
 	}
 
 	async GetAllUsers() {
-		
+
 	}
 
-	async UserLogin(username, password)
-	{
+	async UserLogin(username, password) {
 		var restApi = "/api/user/login";
 
 		var payload = {
@@ -65,13 +29,13 @@ class UserController extends BaseController {
 			password: password
 		};
 
-		var user = await this.Post(restApi, payload);
-		console.log(user);
-		if(user != null) {
-			this._UserId = user.id;
+		this._User = await this.Post(restApi, payload);
+		console.log(this._User);
+		if (this._User != null) {
+			this._UserId = this._User.id;
 		}
 
-		return user;
+		return this._User;
 	}
 }
 
