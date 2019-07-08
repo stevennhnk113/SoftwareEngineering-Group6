@@ -3,7 +3,7 @@ export var IsUsingMockData = true;
 
 function configServerUrl()
 {
-	return (IsLocalServer) ? "localhost:8000" : "";
+	return (IsLocalServer) ? "http://localhost:8000" : "";
 }
 
 export var ServerString = configServerUrl();

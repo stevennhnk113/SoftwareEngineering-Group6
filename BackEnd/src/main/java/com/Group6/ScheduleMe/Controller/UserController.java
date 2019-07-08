@@ -2,6 +2,7 @@ package com.Group6.ScheduleMe.Controller;
 
 import com.Group6.ScheduleMe.Entities.LoginForm;
 import com.Group6.ScheduleMe.Entities.User;
+import com.Group6.ScheduleMe.Entities.Position;
 import com.Group6.ScheduleMe.Exception.ResourceNotFoundException;
 import com.Group6.ScheduleMe.Repository.UserRepository;
 
@@ -29,6 +30,7 @@ public class UserController {
     	return "hello";
     }
     
+    @CrossOrigin
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -41,6 +43,7 @@ public class UserController {
 //    }
     
     // Create a new User
+    @CrossOrigin
     @PostMapping("/user")
     public User createUser(@Valid @RequestBody User user) {
         User savedUser = userRepository.save(user);
@@ -48,13 +51,23 @@ public class UserController {
     }
     
     // Get a Single User
+    @CrossOrigin
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable(value = "id") Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
     }
     
+    @CrossOrigin
+    @GetMapping("/user/{position}")
+    public List<User> getUserByPosition(@PathVariable(value = "position") String position) {
+    	// Return list of Position
+
+    	return null;
+    }
+    
     // Update a Note
+    @CrossOrigin
     @PutMapping("/user/{id}")
     public User updateUser(@PathVariable(value = "id") Long userId,
                                             @Valid @RequestBody User userDetails) {
@@ -71,6 +84,7 @@ public class UserController {
     }
     
     // Delete a User
+    @CrossOrigin
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long userId) {
         User user = userRepository.findById(userId)
@@ -82,12 +96,14 @@ public class UserController {
     }
     
     // Delete a User
+    @CrossOrigin
     @DeleteMapping("/users")
     public ResponseEntity<?> deleteAllUsers() {
         userRepository.deleteAll();
         return ResponseEntity.ok().build();
     }
     
+    @CrossOrigin
     @PostMapping("/user/login")
     public User loginUser(@RequestBody LoginForm loginForm ) {
     	// Get all the user
@@ -105,6 +121,6 @@ public class UserController {
     	else
     	{
     		return null;
-    	}
+    	}    	
     }
 }

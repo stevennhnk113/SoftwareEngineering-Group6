@@ -11,15 +11,11 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-@Table(name = "users",uniqueConstraints = {
-        @UniqueConstraint(columnNames = {
-                "username"
-            })
-        })
+@Table(name = "vacation")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt", "Password"}, 
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, 
         allowGetters = true)
-public class User {
+public class Vacation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false)
@@ -27,18 +23,13 @@ public class User {
     private Long id;
     
     @NotBlank
-    private String UserName;
+    private Date StartTime;
     
     @NotBlank
-    private String FirstName;
+    private Date EndTime;
 
 	@NotBlank
-	private String LastName;
-    
-	private String Position;
-    
-    @NotBlank
-    private String Password;
+	private Long ScheduledFor;
     
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,44 +40,30 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+
+	public Date getStartTime() {
+		return StartTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		StartTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return EndTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		EndTime = endTime;
+	}
+
+	public Long getScheduledFor() {
+		return ScheduledFor;
+	}
+
+	public void setScheduledFor(Long scheduledFor) {
+		ScheduledFor = scheduledFor;
+	}
     
-    public String getFirstName() {
-		return FirstName;
-	}
-
-	public void setFirstName(String firstName) {
-		FirstName = firstName;
-	}
-
-	public String getLastName() {
-		return LastName;
-	}
-
-	public void setLastName(String lastName) {
-		LastName = lastName;
-	}
-
-	public String getPosition() {
-		return Position;
-	}
-
-	public void setPosition(String position) {
-		Position = position;
-	}
-
-	public String getUserName() {
-		return UserName;
-	}
-
-	public void setUserName(String userName) {
-		UserName = userName;
-	}
-
-	public String getPassword() {
-		return Password;
-	}
-
-	public void setPassword(String password) {
-		Password = password;
-	}
+    
 }
