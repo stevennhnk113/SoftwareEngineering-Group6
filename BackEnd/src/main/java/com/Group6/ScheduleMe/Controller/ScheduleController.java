@@ -2,12 +2,11 @@ package com.Group6.ScheduleMe.Controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +34,14 @@ public class ScheduleController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	@CrossOrigin
 	@GetMapping("/schedules")
 	public List<Schedule> getAllSchedules() {
 		return scheduleRepository.findAll();
 	}
 
 	// Create a new Schedule
+	@CrossOrigin
 	@PostMapping("/schedule")
 	public Schedule createSchedule(@RequestBody Schedule schedule) {
 		ScheduleSeries savedScheduleSeries = null;
@@ -56,12 +57,21 @@ public class ScheduleController {
 	}
 
 	// Get a Single Schedule by id
+	@CrossOrigin
 	@GetMapping("/schedule/{id}")
 	public Schedule getScheduleById(@PathVariable(value = "id") Long id) {
 		return scheduleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", id));
 	}
 
+	@CrossOrigin
+	@GetMapping("/schedule/schedulefor/{id}")
+	public List<Schedule> getScheduleByScheduleFor(@PathVariable(value = "id") Long id) {
+		return scheduleRepository.findByScheduleFor(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", id));
+	}
+
 	// Get a Single Schedule
+	@CrossOrigin
 	@GetMapping("/schedule/type/{ScheduleType}")
 	public Schedule getScheduleByType(@PathVariable(value = "ScheduleType") String scheduleType) {
 		return scheduleRepository.findByScheduleType(scheduleType)
@@ -69,22 +79,36 @@ public class ScheduleController {
 	}
 
 	// Update a Note
-	@PutMapping("/schedule/{ScheduleType}")
-	public Schedule updateSchedule(@PathVariable(value = "ScheduleType") String scheduleType,
-			@Valid @RequestBody Schedule scheduleDetails) {
+	@CrossOrigin
+	@PutMapping("/schedule")
+	public Schedule updateSchedule(@RequestBody Schedule schedule) {
 
-		Schedule schedule = scheduleRepository.findByScheduleType(scheduleType)
-				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "ScheduleType", scheduleType));
+		Schedule currentSchedule = scheduleRepository.findById(schedule.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "Update Schedule", schedule.getId()));
 
-		schedule.setStartTime(scheduleDetails.getStartTime());
-		schedule.setEndTime(scheduleDetails.getEndTime());
-		schedule.setScheduleFor(scheduleDetails.getScheduleFor());
-		schedule.setScheduleBy(scheduleDetails.getScheduleBy());
-		Schedule updatedSchedule = scheduleRepository.save(schedule);
+		if (schedule.getScheduleSeries() != null) {
+			ScheduleSeries newScheduleSeries = scheduleSeriesRepository.save(schedule.getScheduleSeries());
+			currentSchedule.setScheduleSeriesid(newScheduleSeries.getId());
+			currentSchedule.setScheduleSeries(newScheduleSeries);
+		} else {
+			if (currentSchedule.getScheduleSeries() != null) {
+				scheduleSeriesRepository.deleteById(currentSchedule.getScheduleSeriesid());
+				currentSchedule.setScheduleSeriesid(0);
+				currentSchedule.setScheduleSeries(null);
+			}
+		}
+
+		currentSchedule.setStartTime(schedule.getStartTime());
+		currentSchedule.setEndTime(schedule.getEndTime());
+		currentSchedule.setScheduleFor(schedule.getScheduleFor());
+		currentSchedule.setScheduleBy(schedule.getScheduleBy());
+		Schedule updatedSchedule = scheduleRepository.save(currentSchedule);
+
 		return updatedSchedule;
 	}
 
 	// Delete a Schedule
+	@CrossOrigin
 	@DeleteMapping("/schedule/{id}")
 	public ResponseEntity<?> deleteSchedule(@PathVariable(value = "id") Long id) {
 		Schedule schedule = scheduleRepository.findById(id)
@@ -96,6 +120,7 @@ public class ScheduleController {
 	}
 
 	// Delete Schedule
+	@CrossOrigin
 	@DeleteMapping("/schedules")
 	public ResponseEntity<?> deleteAllSchedules() {
 		scheduleRepository.deleteAll();

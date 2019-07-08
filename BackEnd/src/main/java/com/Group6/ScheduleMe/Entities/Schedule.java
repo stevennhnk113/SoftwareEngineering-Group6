@@ -69,6 +69,10 @@ public class Schedule {
 	@LastModifiedDate
 	private Date updatedAt;
 
+	public Long getId() {
+		return id;
+	}
+
 	public Date getStartTime() {
 		return StartTime;
 	}
