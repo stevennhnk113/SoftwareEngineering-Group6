@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VacationRepository extends JpaRepository<Vacation, Long>{
 	
-	@Query(value = "SELECT u FROM Vacation u WHERE u.ScheduleFor = ?1", nativeQuery = false)
+	@Query(value = "SELECT u FROM Vacation u WHERE u.ScheduledFor = ?1", nativeQuery = false)
 	Optional<List<Vacation>> findByScheduledFor(Long id);
 }
