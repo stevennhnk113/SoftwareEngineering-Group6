@@ -10,7 +10,7 @@ class ScheduleController extends BaseController {
 
 		var rawSchedules = await this.Get(restApi);
 
-		if(rawSchedules === undefined) return [];
+		if(rawSchedules === null) return [];
 
 		rawSchedules.forEach(element => {
 			element.title = element.scheduleType

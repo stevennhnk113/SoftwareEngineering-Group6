@@ -17,6 +17,8 @@ export class BaseController {
 			json: true
 		};
 
+		var action = this.IsSuccessful;
+
 		return new Promise((resolve, reject) => {
 			request(options, function (error, response, body) {
 				if (error){
@@ -24,8 +26,7 @@ export class BaseController {
 					resolve(null);
 				}
 
-				console.log(body.userName);
-				console.log(body);
+				if(!action(body)) return null;
 
 				resolve(body);
 			});
