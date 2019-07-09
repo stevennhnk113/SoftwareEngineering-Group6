@@ -123,6 +123,23 @@ export class HomeView extends React.Component {
 			"scheduleDetail": ""
 		}
 
+		console.log("toSaveSchedule")
+		console.log(toSaveSchedule)
+
+		return toSaveSchedule;
+	}
+
+	convertSchedule(calendarSchedule) {
+		var toSaveSchedule = {
+			"id": calendarSchedule.id,
+			"startTime": calendarSchedule.start.getTime(),
+			"endTime": calendarSchedule.end.getTime(),
+			"scheduleType": calendarSchedule.scheduleType,
+			"scheduleBy": calendarSchedule.scheduleBy,
+			"scheduleFor": calendarSchedule.scheduleFor,
+			"scheduleDetail": calendarSchedule.scheduleDetail
+		}
+
 		return toSaveSchedule;
 	}
 
@@ -132,10 +149,29 @@ export class HomeView extends React.Component {
 	}
 
 	async OnScheduleClick(event) {
-		if (window.confirm("Do you want to delete this scheudule")) {
-			await ScheduleControllerObj.DeleteSchedule(event.id);
-			this.refreshSchedule();
+		console.log(event)
+		console.log(UsercontrollerObj._User.id)
+		if(event.scheduleBy == UsercontrollerObj._User.id){
+			if (window.confirm("Do you want to delete this scheudule")) {
+				await ScheduleControllerObj.DeleteSchedule(event.id);
+			}
+
+		} else {
+			if(event.scheduleType == "Request") {
+				if (window.confirm("Do you want to accept this schedule request")) {
+					event.scheduleType = "Request Accepted"
+				}
+
+			} else {
+				if (window.confirm("Do you want to reject this schedule request")) {
+					event.scheduleType = "Request"
+				}
+			}
+
+			await ScheduleControllerObj.UpdateSchedule(this.convertSchedule(event));
 		}
+
+		this.refreshSchedule();
 	}
 
 	static SetUserToDisplayCalendar(userID) {
