@@ -36,7 +36,7 @@ export class HomeView extends React.Component {
 		this.moveEvent = this.moveEvent.bind(this)
 	}
 
-	async componentWillMount() {		
+	async componentWillMount() {
 		await this.refreshSchedule()
 	}
 
@@ -75,7 +75,7 @@ export class HomeView extends React.Component {
 		const { Schedules } = this.state
 
 		const idx = Schedules.indexOf(event)
-		
+
 		Schedules[idx].start = start;
 		Schedules[idx].end = end;
 
@@ -111,7 +111,7 @@ export class HomeView extends React.Component {
 	convertScheduleData(calendarSchedule) {
 		var scheduleType = "Availability"
 		var scheduleFor = UsercontrollerObj._User.id
-		if(UsercontrollerObj._User.position == "Manager") {
+		if (UsercontrollerObj._User.position == "Manager") {
 
 		} else {
 
@@ -138,6 +138,13 @@ export class HomeView extends React.Component {
 		console.log(this.state);
 	}
 
+	async OnScheduleClick(event) {
+		if (window.confirm("Do you want to delete this scheudule")) {
+			await ScheduleControllerObj.DeleteSchedule(event.id);
+			this.refreshSchedule();
+		}
+	}
+
 	render() {
 		return (
 			<div>
@@ -150,7 +157,7 @@ export class HomeView extends React.Component {
 					views={{ month: true, week: true }}
 
 					selectable
-					onSelectEvent={event => alert(event.title)}
+					onSelectEvent={schedule => this.OnScheduleClick(schedule)}
 					onSelectSlot={this.handleSelect}
 
 					resizable

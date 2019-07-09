@@ -30,15 +30,15 @@ export class LoginView extends React.Component {
 		}
 
 		// Uncomment to show to professor
-		// this.state = {
-		// 	Username: "ClarieCoyle",
-		// 	Password: "ClarieCoyle123"
-		// }
-
 		this.state = {
-			Username: "CodiDe Mattia",
-			Password: "CodiDe Mattia123"
+			Username: "ClarieCoyle",
+			Password: "ClarieCoyle123"
 		}
+
+		// this.state = {
+		// 	Username: "CodiDe Mattia",
+		// 	Password: "CodiDe Mattia123"
+		// }
 
 		this._loginButtonPress();
 

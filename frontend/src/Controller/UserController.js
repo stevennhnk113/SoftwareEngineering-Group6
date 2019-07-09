@@ -37,6 +37,14 @@ class UserController extends BaseController {
 
 		return this._User;
 	}
+
+	async GetNonManagerUsers() {
+		var restApi = "/api/user/not/manager"
+
+		var users = await this.Get(restApi);
+		console.log(users);
+		return users;
+	}
 }
 
 var UsercontrollerObj = new UserController();

@@ -10,7 +10,7 @@ class ScheduleController extends BaseController {
 
 		var rawSchedules = await this.Get(restApi);
 
-		console.log(rawSchedules);
+		if(rawSchedules === undefined) return [];
 
 		rawSchedules.forEach(element => {
 			element.title = element.scheduleType
@@ -33,6 +33,12 @@ class ScheduleController extends BaseController {
 		console.log("UpdateSchedule")
 		console.log(schedule)
 		return await this.Put(restApi, schedule);
+	}
+
+	async DeleteSchedule(id) {
+		var restApi = "/api/schedule/" + id;
+
+		await this.Delete(restApi)
 	}
 
 	async GetUserScheduleByID(id) {
