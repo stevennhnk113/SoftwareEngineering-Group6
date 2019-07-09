@@ -102,6 +102,7 @@ public class ScheduleController {
 		currentSchedule.setEndTime(schedule.getEndTime());
 		currentSchedule.setScheduleFor(schedule.getScheduleFor());
 		currentSchedule.setScheduleBy(schedule.getScheduleBy());
+		currentSchedule.setScheduleType(schedule.getScheduleType());
 		Schedule updatedSchedule = scheduleRepository.save(currentSchedule);
 
 		return updatedSchedule;
