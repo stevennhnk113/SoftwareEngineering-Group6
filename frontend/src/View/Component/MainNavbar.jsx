@@ -17,6 +17,7 @@ import App from "../../App";
 
 import ls from 'local-storage'
 import UsercontrollerObj from "../../Controller/UserController";
+import { HomeView } from "../HomeView";
 
 export class MainNavbar extends React.Component {
 	constructor(props) {
@@ -65,6 +66,11 @@ export class MainNavbar extends React.Component {
 		App.changeToLoginView();
 	}
 
+	onUserMenuClick(id) {
+		HomeView.SetUserToDisplayCalendar(id);
+		console.log(id)
+	}
+
 	render() {
 		var user = UsercontrollerObj.GetUser();
 		var userName = user.firstName + " " + user.lastName;
@@ -75,21 +81,21 @@ export class MainNavbar extends React.Component {
 		if (user.position == "Manager" && this.state.users != null) {
 			var dropdownItems = [];
 			dropdownItems.push(
-				<DropdownItem  key={user.id}>
+				<DropdownItem  key={user.id} onClick={() => this.onUserMenuClick(user.id)}>
 					Yourself
 				</DropdownItem >
 			);
 
 			this.state.users.forEach(element => {
 				dropdownItems.push(
-					<DropdownItem key={element.id}>
+					<DropdownItem key={element.id} onClick={() => this.onUserMenuClick(element.id)}>
 						{element.firstName + " " + element.lastName}
 					</DropdownItem >
 				)
 			});
 
 			dropdowncontainer = (
-				<Dropdown group isOpen={this.state.dropdownOpen} size="lg" toggle={this.toggle}>
+				<Dropdown on group isOpen={this.state.dropdownOpen} size="lg" toggle={this.toggle}>
 					<DropdownToggle caret>
 						Choose user
 					</DropdownToggle>

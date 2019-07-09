@@ -6,19 +6,7 @@ class ScheduleController extends BaseController {
 	Schedules = [];
 
 	async GetUserSchedule() {
-		var restApi = "/api/schedule/schedulefor/" + UsercontrollerObj._UserId;
-
-		var rawSchedules = await this.Get(restApi);
-
-		if(rawSchedules === null) return [];
-
-		rawSchedules.forEach(element => {
-			element.title = element.scheduleType
-			element.start = new Date(element.startTime)
-			element.end = new Date(element.endTime)
-		});
-
-		return rawSchedules;
+		return await this.GetUserScheduleByID(UsercontrollerObj._UserId);
 	}
 
 	async CreateSchedule(schedule) {
@@ -42,7 +30,19 @@ class ScheduleController extends BaseController {
 	}
 
 	async GetUserScheduleByID(id) {
+		var restApi = "/api/schedule/schedulefor/" + id;
 
+		var rawSchedules = await this.Get(restApi);
+
+		if(rawSchedules === null) return [];
+
+		rawSchedules.forEach(element => {
+			element.title = element.scheduleType
+			element.start = new Date(element.startTime)
+			element.end = new Date(element.endTime)
+		});
+
+		return rawSchedules;
 	}
 }
 

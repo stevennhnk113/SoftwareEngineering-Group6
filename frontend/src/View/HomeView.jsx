@@ -19,13 +19,13 @@ export class HomeView extends React.Component {
 	constructor(props) {
 		super();
 
-		console.log("hellloooooooooooo")
-
 		this.state = {
-			Schedules: []
+			Schedules: [],
+			userID: null
 		}
 
 		this.moveEvent = this.moveEvent.bind(this)
+		HomeView.SetUserToDisplayCalendar = HomeView.SetUserToDisplayCalendar.bind(this)
 	}
 
 	async componentDidMount() {
@@ -123,7 +123,13 @@ export class HomeView extends React.Component {
 	}
 
 	async refreshSchedule() {
-		var scheudules = await ScheduleControllerObj.GetUserSchedule();
+		if(this.state.userID == null) {
+			console.log("noooo")
+			var scheudules = await ScheduleControllerObj.GetUserSchedule();
+		} else{
+			console.log("yesss")
+			var scheudules = await ScheduleControllerObj.GetUserScheduleByID(this.state.userID);
+		}
 
 		this.setState({ Schedules: scheudules });
 
@@ -135,6 +141,11 @@ export class HomeView extends React.Component {
 			await ScheduleControllerObj.DeleteSchedule(event.id);
 			this.refreshSchedule();
 		}
+	}
+
+	static SetUserToDisplayCalendar(userID) {
+		this.setState({userID: userID});
+		this.refreshSchedule();
 	}
 
 	render() {
