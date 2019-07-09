@@ -8,9 +8,10 @@ import {
 	NavItem,
 	NavLink,
 	UncontrolledDropdown,
+	Dropdown,
 	DropdownToggle,
 	DropdownMenu,
-	DropdownItem
+	DropdownItem,
 } from 'reactstrap';
 import App from "../../App";
 import UsercontrollerObj from "../../Controller/UserController";
@@ -21,12 +22,21 @@ export class MainNavbar extends React.Component {
 
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			isOpen: false
+			isOpen: false,
+			dropdownOpen: false,
+			users: null
 		};
 
 		this.goToProfileView = this.goToProfileView.bind(this);
 		this.goToHomeView = this.goToHomeView.bind(this);
 	}
+
+	async SetupUserDropdown() {
+		var users = await UsercontrollerObj.GetNonManagerUsers();
+
+		this.setState({ users: users })
+	}
+
 	toggle() {
 		this.setState({
 			isOpen: !this.state.isOpen
@@ -41,13 +51,44 @@ export class MainNavbar extends React.Component {
 		App.changeToHomeView();
 	}
 
+	toggle() {
+		this.setState(prevState => ({
+			dropdownOpen: !prevState.dropdownOpen
+		}));
+	}
+
 	render() {
 		var user = UsercontrollerObj.GetUser();
 		var userName = user.firstName + " " + user.lastName;
+
+		// Dropdown
+		if (user.position == "Manager" && this.state.users != null) {
+			var dropdownItems = [];
+			dropdownItems.push(
+				<DropdownToggle caret id={user.id}>
+					Yourself
+				</DropdownToggle>
+			);
+
+			this.state.users.forEach(element => {
+				dropdownItems.push(
+					<DropdownToggle caret id={element.id}>
+						element.firstName + " " + element.lastName
+					</DropdownToggle>
+				)
+			});
+
+			var dropdowncontainer = (
+				<Dropdown group isOpen={this.state.dropdownOpen} size="lg" toggle={this.toggle}>
+					{dropdownItems}
+				</Dropdown>
+			);
+		}
+
 		return (
 			<Navbar color="light" light expand="md">
 				<NavbarBrand onClick={this.goToHomeView} href="#">Schedule Me, {userName}</NavbarBrand>
-				<NavbarToggler onClick={this.toggle} />
+
 				<Collapse isOpen={this.state.isOpen} navbar>
 					<Nav className="ml-auto" navbar>
 						<NavItem>
