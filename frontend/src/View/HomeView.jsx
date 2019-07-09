@@ -163,6 +163,23 @@ export class HomeView extends React.Component {
 
 					onDragStart={console.log}
 					onEventDrop={this.moveEvent}
+
+					eventPropGetter={(e) => {
+						var style = null;
+						if(e.scheduleType == "Request") {
+							style = {
+								backgroundColor: 'yellow',
+							}
+						} else if (e.scheduleType == "Request Accepted") {
+							style = {
+								backgroundColor: 'green',
+							}
+						}
+
+						return {
+							style: {...style, ...{color: "black"}}
+						}
+					}}
 				/>
 			</div>
 		);

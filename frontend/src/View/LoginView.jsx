@@ -38,6 +38,11 @@ export class LoginView extends React.Component {
 			Password: "ZackStichall123"
 		}
 
+		this.state = {
+			Username: "ThorsteinWolvey",
+			Password: "ThorsteinWolvey123"
+		}
+
 		// this.state = {
 		// 	Username: "CodiDe Mattia",
 		// 	Password: "CodiDe Mattia123"
