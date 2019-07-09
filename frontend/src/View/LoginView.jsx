@@ -5,7 +5,6 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { FacebookLoginButton } from "react-social-login-buttons";
 import UsercontrollerObj from "../Controller/UserController";
 import App from "../App";
-import ls from 'local-storage'
 
 export class LoginView extends React.Component {
 	_registerButtonPress;
@@ -35,8 +34,8 @@ export class LoginView extends React.Component {
 
 		// Uncomment to show to professor
 		this.state = {
-			Username: "ClarieCoyle",
-			Password: "ClarieCoyle123"
+			Username: "ZackStichall",
+			Password: "ZackStichall123"
 		}
 
 		// this.state = {

@@ -13,7 +13,7 @@ class UserController extends BaseController {
 	}
 
 	GetUser() {
-		console.log(this._User);
+		// console.log(this._User);
 		return this._User;
 	}
 

@@ -16,13 +16,16 @@ const localizer = momentLocalizer(moment)
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 
 export class HomeView extends React.Component {
+	CurrentDisplayCalendarUserID = null;
+
 	constructor(props) {
 		super();
 
 		this.state = {
-			Schedules: [],
-			userID: null
+			Schedules: []
 		}
+
+		this.CurrentDisplayCalendarUserID = UsercontrollerObj.GetUser().id;
 
 		this.moveEvent = this.moveEvent.bind(this)
 		HomeView.SetUserToDisplayCalendar = HomeView.SetUserToDisplayCalendar.bind(this)
@@ -102,9 +105,10 @@ export class HomeView extends React.Component {
 
 	convertScheduleData(calendarSchedule) {
 		var scheduleType = "Availability"
-		var scheduleFor = UsercontrollerObj._User.id
-		if (UsercontrollerObj._User.position == "Manager") {
-
+		var scheduleFor = this.CurrentDisplayCalendarUserID
+		var scheduleBy = UsercontrollerObj._User.id
+		if (scheduleFor != scheduleBy) {
+			scheduleType = "Request"
 		} else {
 
 		}
@@ -114,7 +118,7 @@ export class HomeView extends React.Component {
 			"startTime": calendarSchedule.start.getTime(),
 			"endTime": calendarSchedule.end.getTime(),
 			"scheduleType": scheduleType,
-			"scheduleBy": UsercontrollerObj._User.id,
+			"scheduleBy": scheduleBy,
 			"scheduleFor": scheduleFor,
 			"scheduleDetail": ""
 		}
@@ -123,17 +127,8 @@ export class HomeView extends React.Component {
 	}
 
 	async refreshSchedule() {
-		if(this.state.userID == null) {
-			console.log("noooo")
-			var scheudules = await ScheduleControllerObj.GetUserSchedule();
-		} else{
-			console.log("yesss")
-			var scheudules = await ScheduleControllerObj.GetUserScheduleByID(this.state.userID);
-		}
-
+		var scheudules = await ScheduleControllerObj.GetUserScheduleByID(this.CurrentDisplayCalendarUserID);
 		this.setState({ Schedules: scheudules });
-
-		console.log(this.state);
 	}
 
 	async OnScheduleClick(event) {
@@ -144,7 +139,7 @@ export class HomeView extends React.Component {
 	}
 
 	static SetUserToDisplayCalendar(userID) {
-		this.setState({userID: userID});
+		this.CurrentDisplayCalendarUserID = userID;
 		this.refreshSchedule();
 	}
 

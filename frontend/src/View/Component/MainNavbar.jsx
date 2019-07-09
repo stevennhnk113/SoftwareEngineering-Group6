@@ -14,8 +14,6 @@ import {
 	DropdownItem,
 } from 'reactstrap';
 import App from "../../App";
-
-import ls from 'local-storage'
 import UsercontrollerObj from "../../Controller/UserController";
 import { HomeView } from "../HomeView";
 
@@ -95,7 +93,7 @@ export class MainNavbar extends React.Component {
 			});
 
 			dropdowncontainer = (
-				<Dropdown on group isOpen={this.state.dropdownOpen} size="lg" toggle={this.toggle}>
+				<Dropdown group isOpen={this.state.dropdownOpen} size="lg" toggle={this.toggle}>
 					<DropdownToggle caret>
 						Choose user
 					</DropdownToggle>
