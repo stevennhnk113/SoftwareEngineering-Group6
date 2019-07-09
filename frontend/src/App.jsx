@@ -18,6 +18,7 @@ class App extends React.Component {
 
 		App.changeToHomeView = App.changeToHomeView.bind(this);
 		App.changeToProfileView = App.changeToProfileView.bind(this);
+		App.changeToLoginView = App.changeToLoginView.bind(this);
 	}
 
 	changeToRegisterView() {
@@ -30,6 +31,10 @@ class App extends React.Component {
 
 	static changeToProfileView() {
 		this.setState({ currentView: "UserProfile" });
+	}
+
+	static changeToLoginView() {
+		this.setState({ currentView: "Login" });
 	}
 
 	changeToLoginView() {

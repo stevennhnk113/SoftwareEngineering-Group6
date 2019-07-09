@@ -16,18 +16,10 @@ const localizer = momentLocalizer(moment)
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 
 export class HomeView extends React.Component {
-	_registerButtonPress;
-
-	_loginButtonPress() {
-		console.log("hello");
-
-		if (this.state.Username === "" || this.state.Password === "") return false;
-
-		UsercontrollerObj.UserLogin(this.state.Username, this.state.Password);
-	}
-
 	constructor(props) {
 		super();
+
+		console.log("hellloooooooooooo")
 
 		this.state = {
 			Schedules: []
@@ -36,7 +28,7 @@ export class HomeView extends React.Component {
 		this.moveEvent = this.moveEvent.bind(this)
 	}
 
-	async componentWillMount() {
+	async componentDidMount() {
 		await this.refreshSchedule()
 	}
 

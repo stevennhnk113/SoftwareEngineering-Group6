@@ -5,18 +5,22 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { FacebookLoginButton } from "react-social-login-buttons";
 import UsercontrollerObj from "../Controller/UserController";
 import App from "../App";
+import ls from 'local-storage'
 
 export class LoginView extends React.Component {
 	_registerButtonPress;
 	
 	async _loginButtonPress() {
-		console.log("hello");
+		console.log("_loginButtonPress");
 
 		if(this.state.Username === "" || this.state.Password === "") return false;
 
 		var user = await UsercontrollerObj.UserLogin(this.state.Username, this.state.Password);
-
+		console.log(user)
 		if(user != null) {
+			console.log("user not null")
+			// localStorage.setItem("userName", this.state.Username)
+			// localStorage.setItem("password", this.state.Password)
 			App.changeToHomeView();
 		}
 	}
@@ -40,10 +44,18 @@ export class LoginView extends React.Component {
 		// 	Password: "CodiDe Mattia123"
 		// }
 
-		this._loginButtonPress();
-
         this._loginButtonPress = this._loginButtonPress.bind(this);
-        this._registerButtonPress = props.registerButtonPress;
+		this._registerButtonPress = props.registerButtonPress;
+
+		this._loginButtonPress();
+		
+		// if(localStorage.getItem("userName") != "") {
+		// 	this.state = {
+		// 		// Username: localStorage.getItem("userName"),
+		// 		// Password: localStorage.getItem("password")
+		// 	}
+		// 	this._loginButtonPress();
+		// }
     }
 
     render() {

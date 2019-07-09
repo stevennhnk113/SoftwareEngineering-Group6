@@ -14,6 +14,8 @@ import {
 	DropdownItem,
 } from 'reactstrap';
 import App from "../../App";
+
+import ls from 'local-storage'
 import UsercontrollerObj from "../../Controller/UserController";
 
 export class MainNavbar extends React.Component {
@@ -29,6 +31,8 @@ export class MainNavbar extends React.Component {
 
 		this.goToProfileView = this.goToProfileView.bind(this);
 		this.goToHomeView = this.goToHomeView.bind(this);
+
+		this.SetupUserDropdown();
 	}
 
 	async SetupUserDropdown() {
@@ -37,11 +41,11 @@ export class MainNavbar extends React.Component {
 		this.setState({ users: users })
 	}
 
-	toggle() {
-		this.setState({
-			isOpen: !this.state.isOpen
-		});
-	}
+	// toggle() {
+	// 	// this.setState({
+	// 	// 	isOpen: !this.state.isOpen
+	// 	// });
+	// }
 
 	goToProfileView() {
 		App.changeToProfileView();
@@ -57,30 +61,41 @@ export class MainNavbar extends React.Component {
 		}));
 	}
 
+	logout() {
+		App.changeToLoginView();
+	}
+
 	render() {
 		var user = UsercontrollerObj.GetUser();
 		var userName = user.firstName + " " + user.lastName;
 
+
+		var dropdowncontainer;
 		// Dropdown
 		if (user.position == "Manager" && this.state.users != null) {
 			var dropdownItems = [];
 			dropdownItems.push(
-				<DropdownToggle caret id={user.id}>
+				<DropdownItem  key={user.id}>
 					Yourself
-				</DropdownToggle>
+				</DropdownItem >
 			);
 
 			this.state.users.forEach(element => {
 				dropdownItems.push(
-					<DropdownToggle caret id={element.id}>
-						element.firstName + " " + element.lastName
-					</DropdownToggle>
+					<DropdownItem key={element.id}>
+						{element.firstName + " " + element.lastName}
+					</DropdownItem >
 				)
 			});
 
-			var dropdowncontainer = (
+			dropdowncontainer = (
 				<Dropdown group isOpen={this.state.dropdownOpen} size="lg" toggle={this.toggle}>
-					{dropdownItems}
+					<DropdownToggle caret>
+						Choose user
+					</DropdownToggle>
+					<DropdownMenu>
+						{dropdownItems}
+					</DropdownMenu>
 				</Dropdown>
 			);
 		}
@@ -88,11 +103,12 @@ export class MainNavbar extends React.Component {
 		return (
 			<Navbar color="light" light expand="md">
 				<NavbarBrand onClick={this.goToHomeView} href="#">Schedule Me, {userName}</NavbarBrand>
-
+				{dropdowncontainer}
 				<Collapse isOpen={this.state.isOpen} navbar>
 					<Nav className="ml-auto" navbar>
 						<NavItem>
 							<NavLink onClick={this.goToProfileView} href="#">My Profile</NavLink>
+							<NavLink onClick={this.logout} href="#">Log out</NavLink>
 						</NavItem>
 					</Nav>
 				</Collapse>

@@ -26,7 +26,8 @@ export class BaseController {
 					resolve(null);
 				}
 
-				if(!action(body)) return null;
+				console.log(response);
+				if(!action(response)) resolve(null);
 
 				resolve(body);
 			});
@@ -49,6 +50,8 @@ export class BaseController {
 			//mode: 'Access-Control-Allow-Origin'
 		};
 
+		var action = this.IsSuccessful;
+
 		return new Promise((resolve, reject) => {
 			request(options, function (error, response, body) {
 				if (error){
@@ -56,6 +59,8 @@ export class BaseController {
 					resolve(null);
 				}
 
+				console.log(response);
+				if(!action(response)) resolve(null);
 				resolve(body);
 			});
 		});
@@ -116,6 +121,6 @@ export class BaseController {
 	}
 
 	IsSuccessful(response) {
-		return (response.status === 200) ? true : false;
+		return (response.statusCode === 200) ? true : false;
 	}
 }

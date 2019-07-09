@@ -30,7 +30,8 @@ class UserController extends BaseController {
 		};
 
 		this._User = await this.Post(restApi, payload);
-		console.log(this._User);
+		// console.log("blad")
+		// console.log(this._User);
 		if (this._User != null) {
 			this._UserId = this._User.id;
 		}
