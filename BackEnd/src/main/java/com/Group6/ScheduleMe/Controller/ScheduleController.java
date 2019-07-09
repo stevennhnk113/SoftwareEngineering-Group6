@@ -67,7 +67,7 @@ public class ScheduleController {
 	@GetMapping("/schedule/schedulefor/{id}")
 	public List<Schedule> getScheduleByScheduleFor(@PathVariable(value = "id") Long id) {
 		return scheduleRepository.findByScheduleFor(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "id", id));
+				.orElseThrow(() -> new ResourceNotFoundException("Schedule", "schedulefor", id));
 	}
 
 	// Get a Single Schedule
