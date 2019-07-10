@@ -67,6 +67,8 @@ export class HomeView extends React.Component {
 	}
 
 	resizeEvent = ({ event, start, end }) => {
+		if(event.scheduleBy != UsercontrollerObj._User.id) return;
+
 		const { Schedules } = this.state
 
 		const idx = Schedules.indexOf(event)
@@ -157,14 +159,14 @@ export class HomeView extends React.Component {
 			}
 
 		} else {
-			if(event.scheduleType == "Request") {
+			if(event.scheduleType == "Request" || event.scheduleType == "Reject") {
 				if (window.confirm("Do you want to accept this schedule request")) {
 					event.scheduleType = "Request Accepted"
 				}
 
 			} else {
 				if (window.confirm("Do you want to reject this schedule request")) {
-					event.scheduleType = "Request"
+					event.scheduleType = "Reject"
 				}
 			}
 
@@ -172,6 +174,16 @@ export class HomeView extends React.Component {
 		}
 
 		this.refreshSchedule();
+	}
+
+	async OnScheduleDoubleClick(event) {
+		// if(event.scheduleBy != UsercontrollerObj._User.id){
+		// 	if (window.confirm("Do you want to reject this schedule request")) {
+		// 		event.scheduleType = "Request"
+		// 	}
+		// }
+
+		// await ScheduleControllerObj.UpdateSchedule(this.convertSchedule(event));
 	}
 
 	static SetUserToDisplayCalendar(userID) {
@@ -188,7 +200,7 @@ export class HomeView extends React.Component {
 					events={this.state.Schedules}
 
 					defaultView={Views.WEEK}
-					views={{ month: true, week: true }}
+					views={{ week: true }}
 
 					selectable
 					onSelectEvent={schedule => this.OnScheduleClick(schedule)}
@@ -200,6 +212,8 @@ export class HomeView extends React.Component {
 					onDragStart={console.log}
 					onEventDrop={this.moveEvent}
 
+					onDoubleClickEvent={schedule => this.OnScheduleDoubleClick(schedule)}
+
 					eventPropGetter={(e) => {
 						var style = null;
 						if(e.scheduleType == "Request") {
@@ -209,6 +223,10 @@ export class HomeView extends React.Component {
 						} else if (e.scheduleType == "Request Accepted") {
 							style = {
 								backgroundColor: 'green',
+							}
+						} else if (e.scheduleType == "Reject") {
+							style = {
+								backgroundColor: 'red',
 							}
 						}
 
