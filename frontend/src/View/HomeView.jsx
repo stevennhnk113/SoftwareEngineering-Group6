@@ -188,7 +188,7 @@ export class HomeView extends React.Component {
 					events={this.state.Schedules}
 
 					defaultView={Views.WEEK}
-					views={{ month: true, week: true }}
+					views={{ week: true }}
 
 					selectable
 					onSelectEvent={schedule => this.OnScheduleClick(schedule)}
