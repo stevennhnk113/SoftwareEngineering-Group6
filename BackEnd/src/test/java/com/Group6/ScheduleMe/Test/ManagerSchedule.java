@@ -34,31 +34,30 @@ public class ManagerSchedule {
   public void tearDown() {
     driver.quit();
   }
-  @Test
-  public void managerSchedule() {
-    driver.get("http://localhost:3000/");
-    driver.manage().window().setSize(new Dimension(1050, 708));
-    driver.findElement(By.name("Username")).click();
-    driver.findElement(By.name("Username")).sendKeys("steve");
-    driver.findElement(By.name("password")).click();
-    driver.findElement(By.name("password")).sendKeys("33");
-    driver.findElement(By.cssSelector(".btn-lg:nth-child(5)")).click();
-   
-    {
-      WebElement element = driver.findElement(By.cssSelector(".rbc-now > .rbc-events-container"));
-      Actions builder = new Actions(driver);
-      builder.moveToElement(element).clickAndHold().perform();
-    }
-    {
-      WebElement element = driver.findElement(By.cssSelector(".rbc-now > .rbc-events-container"));
-      Actions builder = new Actions(driver);
-      builder.moveToElement(element).perform();
-    }
-    {
-      WebElement element = driver.findElement(By.cssSelector(".rbc-now > .rbc-events-container"));
-      Actions builder = new Actions(driver);
-      builder.moveToElement(element).release().perform();
-    }
-   
-  }
+
+ @Test
+ public void managerSchedule() {
+   driver.get("http://localhost:3000/");
+   driver.manage().window().setSize(new Dimension(1050, 708));
+   driver.findElement(By.name("Username")).click();
+   driver.findElement(By.name("Username")).sendKeys("steve");
+   driver.findElement(By.name("password")).click();
+   driver.findElement(By.name("password")).sendKeys("33");
+   driver.findElement(By.cssSelector(".btn-lg:nth-child(5)")).click();
+ 
+   driver.findElement(By.linkText("My Profile")).click();
+   {
+     WebElement element = driver.findElement(By.linkText("My Profile"));
+     Actions builder = new Actions(driver);
+     builder.moveToElement(element).perform();
+   }
+   {
+     WebElement element = driver.findElement(By.tagName("body"));
+     Actions builder = new Actions(driver);
+     builder.moveToElement(element, 0, 0).perform();
+   }
+   driver.findElement(By.linkText("Log out")).click();
+ }
 }
+
+
