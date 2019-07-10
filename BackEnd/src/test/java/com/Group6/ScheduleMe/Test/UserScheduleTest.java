@@ -27,6 +27,7 @@ import org.openqa.selenium.interactions.Actions;
 	  private WebDriver driver;
 	  private Map<String, Object> vars;
 	  JavascriptExecutor js;
+	  
 	  @Before
 	  public void setUp() {
 		  System.setProperty("webdriver.chrome.driver", "C:/temp/chromedriver.exe");
