@@ -67,6 +67,8 @@ export class HomeView extends React.Component {
 	}
 
 	resizeEvent = ({ event, start, end }) => {
+		if(event.scheduleBy != UsercontrollerObj._User.id) return;
+
 		const { Schedules } = this.state
 
 		const idx = Schedules.indexOf(event)
