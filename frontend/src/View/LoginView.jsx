@@ -33,15 +33,15 @@ export class LoginView extends React.Component {
 		}
 
 		// Uncomment to show to professor
-		this.state = {
-			Username: "ZackStichall",
-			Password: "ZackStichall123"
-		}
+		// this.state = {
+		// 	Username: "ZackStichall",
+		// 	Password: "ZackStichall123"
+		// }
 
-		this.state = {
-			Username: "ThorsteinWolvey",
-			Password: "ThorsteinWolvey123"
-		}
+		// this.state = {
+		// 	Username: "ThorsteinWolvey",
+		// 	Password: "ThorsteinWolvey123"
+		// }
 
 		// this.state = {
 		// 	Username: "CodiDe Mattia",
@@ -51,7 +51,7 @@ export class LoginView extends React.Component {
         this._loginButtonPress = this._loginButtonPress.bind(this);
 		this._registerButtonPress = props.registerButtonPress;
 
-		this._loginButtonPress();
+		// this._loginButtonPress();
 		
 		// if(localStorage.getItem("userName") != "") {
 		// 	this.state = {
