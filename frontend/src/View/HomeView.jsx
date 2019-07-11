@@ -153,12 +153,15 @@ export class HomeView extends React.Component {
 	async OnScheduleClick(event) {
 		console.log(event)
 		console.log(UsercontrollerObj._User.id)
+
 		if(event.scheduleBy == UsercontrollerObj._User.id){
 			if (window.confirm("Do you want to delete this scheudule")) {
 				await ScheduleControllerObj.DeleteSchedule(event.id);
 			}
 
 		} else {
+			if(UsercontrollerObj._User.position == "Manager") return;
+
 			if(event.scheduleType == "Request" || event.scheduleType == "Reject") {
 				if (window.confirm("Do you want to accept this schedule request")) {
 					event.scheduleType = "Request Accepted"
