@@ -109,6 +109,7 @@ export class MainNavbar extends React.Component {
 				<NavbarBrand onClick={this.goToHomeView} href="#">Schedule Me, {userName}</NavbarBrand>
 				{dropdowncontainer}
 				<Collapse isOpen={this.state.isOpen} navbar>
+				<Button className="btn-lg btn-dark btn-block">Request Time Off</Button>
 					<Nav className="ml-auto" navbar>
 						<NavItem>
 							<NavLink onClick={this.goToProfileView} href="#">My Profile</NavLink>
