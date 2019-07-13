@@ -4,6 +4,8 @@ import moment from 'moment';
  
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { MainNavbar } from "./Component/MainNavbar";
+
 
 class VacationRequest extends Component {
 
@@ -21,7 +23,11 @@ class VacationRequest extends Component {
       startDate: date
     })
   }
-
+  handleChange(date) {
+    this.setState({
+      endtDate: date
+    })
+  }
   handleSubmit(e) {
     e.preventDefault();
     let main = this.state.startDate
@@ -45,7 +51,7 @@ class VacationRequest extends Component {
           <div className="form-group">
             <label>Select End Date: </label>
             <DatePicker
-              selected={ this.state.startDate }
+              selected={ this.state.endDate }
               onChange={ this.handleChange }
               name="endDate"
               dateFormat="MM/DD/YYYY"
