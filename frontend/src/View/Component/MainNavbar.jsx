@@ -12,6 +12,7 @@ import {
 	DropdownToggle,
 	DropdownMenu,
 	DropdownItem,
+	Button,
 } from 'reactstrap';
 import App from "../../App";
 import UsercontrollerObj from "../../Controller/UserController";
@@ -109,7 +110,7 @@ export class MainNavbar extends React.Component {
 				<NavbarBrand onClick={this.goToHomeView} href="#">Schedule Me, {userName}</NavbarBrand>
 				{dropdowncontainer}
 				<Collapse isOpen={this.state.isOpen} navbar>
-				<Button className="btn-lg btn-dark btn-block">Request Time Off</Button>
+				<Button>Request Time Off</Button>
 					<Nav className="ml-auto" navbar>
 						<NavItem>
 							<NavLink onClick={this.goToProfileView} href="#">My Profile</NavLink>

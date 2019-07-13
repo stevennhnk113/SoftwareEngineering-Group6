@@ -60,7 +60,7 @@ export class BaseController {
 				}
 
 				console.log(response);
-				if(!action(response)) resolve(null);
+				if(!action(response))resolve(null);
 				resolve(body);
 			});
 		});
@@ -121,6 +121,6 @@ export class BaseController {
 	}
 
 	IsSuccessful(response) {
-		return (response.statusCode === 200) ? true : false;
+		return (response.statusCode == 200) ? true : false;
 	}
 }
