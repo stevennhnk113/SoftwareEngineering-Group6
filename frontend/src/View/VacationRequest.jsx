@@ -28,7 +28,7 @@ class VacationRequest extends Component {
       endtDate: date
     })
   }
-  handleSubmit(e) {
+  handleSubmit(endDate) {
     e.preventDefault();
     let main = this.state.startDate
     console.log(main.format('L'));
@@ -58,7 +58,7 @@ class VacationRequest extends Component {
             />
           </div>
           <div className="form-group">
-            <button className="btn btn-success">Request</button>
+            <button className="btn-lg btn-dark btn-block">Request</button>
           </div>
         </form>
       </div>
