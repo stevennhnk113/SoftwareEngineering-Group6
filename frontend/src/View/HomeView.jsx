@@ -228,7 +228,14 @@ export class HomeView extends React.Component {
 							style = {
 								backgroundColor: 'red',
 							}
+							
+						}else if (e.scheduleType == "Vacation") {
+							style = {
+								backgroundColor: 'blue',
+							}
+							
 						}
+
 
 						return {
 							style: {...style, ...{color: "black"}}

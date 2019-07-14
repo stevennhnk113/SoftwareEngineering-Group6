@@ -5,6 +5,7 @@ import { LoginView } from "./View/LoginView";
 import { RegisterView } from "./View/RegisterView";
 import { HomeView } from "./View/HomeView";
 import { UserProfileView } from "./View/UserProfileView";
+import { VacationRequest} from "./View/VacationRequest";
 
 class App extends React.Component {
 	constructor() {
@@ -55,7 +56,6 @@ class App extends React.Component {
 					<LoginView
 						registerButtonPress={this.changeToRegisterView}>
 					</LoginView>);
-
 				break;
 			case "Register":
 				renderComponent = (
@@ -64,6 +64,12 @@ class App extends React.Component {
 						registerButtonPress={this.changeToRegisterView}>
 					</RegisterView>);
 				break;
+			case "VacationRequest":
+			    renderComponent = (
+				<VacationRequest
+					handleChange={this.goToVacationRequest}>
+				</VacationRequest>);
+			break;
 			default:
 				renderComponent = (<LoginView></LoginView>);
 				break;

@@ -28,7 +28,7 @@ class VacationRequest extends Component {
       endtDate: date
     })
   }
-  handleSubmit(endDate) {
+  handleSubmit(e) {
     e.preventDefault();
     let main = this.state.startDate
     console.log(main.format('L'));
@@ -65,3 +65,21 @@ class VacationRequest extends Component {
     );
   }
 }
+
+/*  
+	async _loginButtonPress() {
+		console.log("_loginButtonPress");
+
+		if(this.state.Username === "" || this.state.Password === "") return false;
+
+		var user = await UsercontrollerObj.UserLogin(this.state.Username, this.state.Password);
+		console.log(user)
+		if(user != null) {
+			console.log("user not null")
+			// localStorage.setItem("userName", this.state.Username)
+			// localStorage.setItem("password", this.state.Password)
+			App.changeToHomeView();
+		}
+    }*/
+    
+    /*this._loginButtonPress = this._loginButtonPress.bind(this);*/
