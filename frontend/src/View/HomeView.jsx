@@ -17,6 +17,7 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 
 export class HomeView extends React.Component {
 	CurrentDisplayCalendarUserID = null;
+	
 
 	constructor(props) {
 		super();

@@ -11,8 +11,8 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			currentView: "Login"
-		}
+			currentView: "Login",
+			isSetVacationOpen: "VacationRequest"		}
 
 		this.changeToRegisterView = this.changeToRegisterView.bind(this);
 		this.changeToLoginView = this.changeToLoginView.bind(this);
@@ -42,8 +42,8 @@ class App extends React.Component {
 	changeToLoginView() {
 		this.setState({ currentView: "Login" });
 	}
-	goToVacationRequest() {
-		this.setState({ currentView: "VacationRequest" });
+	static goToVacationRequest() {
+		this.setState({ isSetVacationOpen: "VacationRequest" });
 	}
 
 	render() {
