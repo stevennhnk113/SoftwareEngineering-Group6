@@ -1,60 +1,50 @@
 import { BaseController } from "./BaseController";
+import { IsUsingMockData } from "../config";
+import UsercontrollerObj from "./UserController";
 
 class VacationController extends BaseController {
-	_UserId = "";
-	_User = null;
+	Vacations = [];
 
-	async GetUserByID(id) {
-		var restApi = "/api/user/" + id.toString();
-
-		this._User = await this.Get(restApi);
-		console.log(this._User);
-		return this._User;
+	async GetUserSchedule() {
+		return await this.GetUserScheduleByID(UsercontrollerObj._UserId);
 	}
 
-	GetUser() {
-		// console.log(this._User);
-		return this._User;
+	async CreateSchedule(vacation) {
+		var restApi = "/api/vacation";
+
+		return await this.Post(restApi, vacation);
 	}
 
-	async GetAllUsers() {
+	async UpdateSchedule(vacation) {
+		var restApi = "/api/vacation";
 
+		console.log("UpdateSchedule")
+		console.log(vacation)
+		return await this.Put(restApi,vacation);
 	}
 
-	async UserLogin(username, password) {
-		var restApi = "/api/user/login";
+	async DeleteSchedule(id) {
+		var restApi = "/api/vacation/" + id;
 
-		var payload = {
-			username: username,
-			password: password
-		};
-
-		this._User = await this.Post(restApi, payload);
-		// console.log("blad")
-		// console.log(this._User);
-		if (this._User != null) {
-			this._UserId = this._User.id;
-		}
-
-		return this._User;
+		await this.Delete(restApi)
 	}
 
-	async GetNonManagerUsers() {
-		var restApi = "/api/user/not/manager"
+	async GetUserScheduleByID(id) {
+		var restApi = "/api/schedule/schedulefor/" + id;
 
-		var users = await this.Get(restApi);
-		console.log(users);
-		return users;
-	}
+		var rawSchedules = await this.Get(restApi);
 
-	async CreateUser(user) {
-		var restApi = "/api/user"
+		if(rawSchedules === null) return [];
 
-		var users = await this.Post(restApi, user);
-		console.log(users);
-		return users;
+		rawSchedules.forEach(element => {
+			element.title = element.scheduleType
+			element.start = new Date(element.startTime)
+			element.end = new Date(element.endTime)
+		});
+
+		return rawSchedules;
 	}
 }
 
-var UsercontrollerObj = new UserController();
-export default UsercontrollerObj;
+var VacationeControllerObj = new VacationController();
+export default VacationControllerObj;
