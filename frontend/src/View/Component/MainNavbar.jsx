@@ -31,6 +31,7 @@ export class MainNavbar extends React.Component {
 
 		this.goToProfileView = this.goToProfileView.bind(this);
 		this.goToHomeView = this.goToHomeView.bind(this);
+		this.goToVacationRequest = this.goToVacationRequest.bind(this);
 
 		this.SetupUserDropdown();
 	}
@@ -57,7 +58,7 @@ export class MainNavbar extends React.Component {
 
 	
 	goToVacationRequest() {
-		App.changeToVacationRequest();
+		App.goToVacationRequest();
 	}
 	toggle() {
 		this.setState(prevState => ({
@@ -116,7 +117,7 @@ export class MainNavbar extends React.Component {
 				<Collapse isOpen={this.state.isOpen} navbar>
 				
 					<Nav className="ml-auto" navbar>
-					<Button onClick={this.goToVacationrequest} href="#">Request Time Off</Button>
+					<Button onClick={this.goToVacationRequest} href="#">Request Time Off</Button>
 						<NavItem>
 							<NavLink onClick={this.goToProfileView} href="#">My Profile</NavLink>
 							<NavLink onClick={this.logout} href="#">Log out</NavLink>

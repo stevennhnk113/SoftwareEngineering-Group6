@@ -12,7 +12,7 @@ class App extends React.Component {
 		super();
 		this.state = {
 			currentView: "Login",
-			isSetVacationOpen: "VacationRequest"		}
+			isSetVacationOpen: false		}
 
 		this.changeToRegisterView = this.changeToRegisterView.bind(this);
 		this.changeToLoginView = this.changeToLoginView.bind(this);
@@ -20,6 +20,7 @@ class App extends React.Component {
 		App.changeToHomeView = App.changeToHomeView.bind(this);
 		App.changeToProfileView = App.changeToProfileView.bind(this);
 		App.changeToLoginView = App.changeToLoginView.bind(this);
+		App.goToVacationRequest = App.goToVacationRequest.bind(this);
 
 	}
 
@@ -42,8 +43,11 @@ class App extends React.Component {
 	changeToLoginView() {
 		this.setState({ currentView: "Login" });
 	}
+
 	static goToVacationRequest() {
-		this.setState({ isSetVacationOpen: "VacationRequest" });
+		console.log("goToVacationRequest")
+		this.setState({ isSetVacationOpen: true });
+		console.log(this);
 	}
 
 	render() {
@@ -52,9 +56,13 @@ class App extends React.Component {
 			case "UserProfile":
 				renderComponent = (<UserProfileView></UserProfileView>)
 				break;
-			case "Home":
-				renderComponent = (<HomeView></HomeView>)
-				break;
+				case "Home":
+					var vacationRequest = null;
+					if (this.state.isSetVacationOpen) {
+						vacationRequest = <VacationRequest></VacationRequest>;
+					}
+					renderComponent = ([<HomeView></HomeView>, vacationRequest])
+					break;
 			case "Login":
 				renderComponent = (
 					<LoginView
@@ -68,12 +76,12 @@ class App extends React.Component {
 						registerButtonPress={this.changeToRegisterView}>
 					</RegisterView>);
 				break;
-			case "VacationRequest":
+		/*	case "VacationRequest":
 			    renderComponent = (
 				<VacationRequest
 					handleChange={this.goToVacationRequest}>
 				</VacationRequest>);
-			break;
+			break;*/
 			default:
 				renderComponent = (<LoginView></LoginView>);
 				break;
