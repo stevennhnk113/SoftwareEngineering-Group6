@@ -46,5 +46,5 @@ class VacationController extends BaseController {
 	}
 }
 
-var VacationeControllerObj = new VacationController();
+var VacationControllerObj = new VacationController();
 export default VacationControllerObj;

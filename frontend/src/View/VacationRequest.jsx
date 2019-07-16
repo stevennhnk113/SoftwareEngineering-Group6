@@ -10,7 +10,7 @@ import moment from 'moment'
 import './Style/HomeView.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import ScheduleControllerObj from "../Controller/ScheduleController";
+import VacationControllerObj from "../Controller/VacationController";
 
 const localizer = momentLocalizer(moment)
 const DragAndDropCalendar = withDragAndDrop(Calendar)
@@ -23,7 +23,7 @@ export class VacationRequest extends React.Component {
 		super();
 
 		this.state = {
-			Schedules: []
+			Vacations: []
 		}
 
 		this.CurrentDisplayCalendarUserID = UsercontrollerObj.GetUser().id;
@@ -37,9 +37,9 @@ export class VacationRequest extends React.Component {
 	}
 
 	async moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
-		const { Schedules } = this.state
+		const { Vacations } = this.state
 
-		const idx = Schedules.indexOf(event)
+		const idx = Vacations.indexOf(event)
 		let allDay = event.allDay
 
 		if (!event.allDay && droppedOnAllDaySlot) {
@@ -48,21 +48,21 @@ export class VacationRequest extends React.Component {
 			allDay = false
 		}
 
-		console.log(Schedules)
+		console.log(Vacations)
 
 		const updatedEvent = { ...event, start, end, allDay }
 
 		console.log(updatedEvent)
 
-		const nextEvents = [...Schedules]
+		const nextEvents = [...Vacations]
 		nextEvents.splice(idx, 1, updatedEvent)
 
 		this.setState({
-			Schedules: nextEvents,
+			Vacations: nextEvents,
 		})
 
 		var toSaveSchedule = this.convertScheduleData(updatedEvent);
-		await ScheduleControllerObj.UpdateSchedule(toSaveSchedule);
+		await VacationControllerObj.UpdateSchedule(toSaveSchedule);
 
 		this.refreshSchedule()
 	}
@@ -70,18 +70,17 @@ export class VacationRequest extends React.Component {
 	resizeEvent = ({ event, start, end }) => {
 		if(event.scheduleBy != UsercontrollerObj._User.id) return;
 
-		const { Schedules } = this.state
+		const { Vacations} = this.state
 
-		const idx = Schedules.indexOf(event)
+		const idx = Vacations.indexOf(event)
 
-		Schedules[idx].start = start;
-		Schedules[idx].end = end;
+		Vacations[idx].start = start;
+		Vacations[idx].end = end;
 
 		this.setState({
-			Schedules: Schedules,
+			Vacations: Vacations,
 		})
-
-		ScheduleControllerObj.UpdateSchedule(Schedules[idx]);
+        VacationControllerObj.UpdateSchedule(Vacations[idx]);
 	}
 
 	handleSelect = async ({ start, end }) => {
@@ -94,15 +93,15 @@ export class VacationRequest extends React.Component {
 		};
 
 		this.setState({
-			Schedules: [
-				...this.state.Schedules,
+			Vacations: [
+				...this.state.Vacations,
 				newSchedule,
 			],
 		})
 
 		var toSaveSchedule = this.convertScheduleData(newSchedule);
 
-		await ScheduleControllerObj.CreateSchedule(toSaveSchedule);
+		await VacationControllerObj.CreateSchedule(toSaveSchedule);
 		await this.refreshSchedule()
 	}
 
@@ -147,8 +146,8 @@ export class VacationRequest extends React.Component {
 	}
 
 	async refreshSchedule() {
-		var scheudules = await ScheduleControllerObj.GetUserScheduleByID(this.CurrentDisplayCalendarUserID);
-		this.setState({ Schedules: scheudules });
+		var vacations = await VacationControllerObj.GetUserScheduleByID(this.CurrentDisplayCalendarUserID);
+		this.setState({ Vacations: vacations });
 	}
 
 	async OnScheduleClick(event) {
@@ -156,7 +155,7 @@ export class VacationRequest extends React.Component {
 		console.log(UsercontrollerObj._User.id)
 		if(event.scheduleBy == UsercontrollerObj._User.id){
 			if (window.confirm("Do you want to delete this scheudule")) {
-				await ScheduleControllerObj.DeleteSchedule(event.id);
+				await VacationControllerObj.DeleteSchedule(event.id);
 			}
 
 		} else {
@@ -171,7 +170,7 @@ export class VacationRequest extends React.Component {
 				}
 			}
 
-			await ScheduleControllerObj.UpdateSchedule(this.convertSchedule(event));
+			await VacationControllerObj.UpdateSchedule(this.convertSchedule(event));
 		}
 
 		this.refreshSchedule();
