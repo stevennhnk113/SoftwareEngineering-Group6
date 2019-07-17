@@ -5,6 +5,13 @@ import UsercontrollerObj from "./UserController";
 class ScheduleController extends BaseController {
 	Schedules = [];
 
+	constructor() {
+		super();
+
+		this.UpdateSchedule = this.UpdateSchedule.bind(this)
+		this.DeleteSchedule = this.DeleteSchedule.bind(this)
+	}
+
 	async GetUserSchedule() {
 		return await this.GetUserScheduleByID(UsercontrollerObj._UserId);
 	}
@@ -23,8 +30,8 @@ class ScheduleController extends BaseController {
 		return await this.Put(restApi, schedule);
 	}
 
-	async DeleteSchedule(id) {
-		var restApi = "/api/schedule/" + id;
+	async DeleteSchedule(event) {
+		var restApi = "/api/schedule/" + event.id;
 
 		await this.Delete(restApi)
 	}

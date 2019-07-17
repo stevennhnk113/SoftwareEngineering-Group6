@@ -3,6 +3,10 @@ var request = require("request");
 
 
 export class BaseController {
+	constructor() {
+		this.Delete = this.Delete.bind(this)
+	}
+
 	async Get(restApi) {
 		console.log(ServerString + restApi);
 
