@@ -32,7 +32,12 @@ public class User {
     @NotBlank
     private String FirstName;
 
-	@NotBlank
+	public Long getId() {
+		return id;
+	}
+
+   
+@NotBlank
 	private String LastName;
     
 	private String Position;

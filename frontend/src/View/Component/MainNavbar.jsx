@@ -12,6 +12,7 @@ import {
 	DropdownToggle,
 	DropdownMenu,
 	DropdownItem,
+	Button,
 } from 'reactstrap';
 import App from "../../App";
 import UsercontrollerObj from "../../Controller/UserController";
@@ -30,6 +31,7 @@ export class MainNavbar extends React.Component {
 
 		this.goToProfileView = this.goToProfileView.bind(this);
 		this.goToHomeView = this.goToHomeView.bind(this);
+		this.goToVacationRequest = this.goToVacationRequest.bind(this);
 
 		this.SetupUserDropdown();
 	}
@@ -54,6 +56,10 @@ export class MainNavbar extends React.Component {
 		App.changeToHomeView();
 	}
 
+	
+	goToVacationRequest() {
+		App.goToVacationRequest();
+	}
 	toggle() {
 		this.setState(prevState => ({
 			dropdownOpen: !prevState.dropdownOpen
@@ -109,7 +115,9 @@ export class MainNavbar extends React.Component {
 				<NavbarBrand onClick={this.goToHomeView} href="#">Schedule Me, {userName}</NavbarBrand>
 				{dropdowncontainer}
 				<Collapse isOpen={this.state.isOpen} navbar>
+				
 					<Nav className="ml-auto" navbar>
+					<Button onClick={this.goToVacationRequest} href="#">Request Time Off</Button>
 						<NavItem>
 							<NavLink onClick={this.goToProfileView} href="#">My Profile</NavLink>
 							<NavLink onClick={this.logout} href="#">Log out</NavLink>

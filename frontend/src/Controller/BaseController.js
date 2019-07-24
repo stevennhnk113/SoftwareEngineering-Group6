@@ -3,6 +3,10 @@ var request = require("request");
 
 
 export class BaseController {
+	constructor() {
+		this.Delete = this.Delete.bind(this)
+	}
+
 	async Get(restApi) {
 		console.log(ServerString + restApi);
 
@@ -60,7 +64,7 @@ export class BaseController {
 				}
 
 				console.log(response);
-				if(!action(response)) resolve(null);
+				if(!action(response))resolve(null);
 				resolve(body);
 			});
 		});
@@ -121,6 +125,6 @@ export class BaseController {
 	}
 
 	IsSuccessful(response) {
-		return (response.statusCode === 200) ? true : false;
+		return (response.statusCode == 200) ? true : false;
 	}
 }
