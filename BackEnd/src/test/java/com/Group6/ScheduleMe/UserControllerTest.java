@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.Group6.ScheduleMe.Entities.LoginForm;
 import com.Group6.ScheduleMe.Entities.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -108,7 +109,7 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void CreateUserTest() {
+	public void CreateAndGetUserTest() {
 		long testUserID = -1;
 		try {
 			// Create user
@@ -177,5 +178,86 @@ public class UserControllerTest {
 			}
 		}
 	}
+	
+	@Test
+	public void LoginUserFailTest() {
+		long testUserID = -1;
+		try {
+			// Create user
+			testUserID = CreateATestUser();
 
+			if (testUserID == -1) {
+				fail("Fail to make request");
+			}
+
+			// Check if wrong pass cannot login
+			LoginForm loginForm = new LoginForm();
+			loginForm.setUsername(TestUserName);
+			loginForm.setPassword(TestPassword + "123");
+			
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = Obj.writeValueAsString(loginForm);
+
+			OkHttpClient client = new OkHttpClient();
+
+			MediaType mediaType = MediaType.parse("application/json");
+			RequestBody body = RequestBody.create(mediaType, jsonStr);
+			Request request = new Request.Builder().url("http://localhost:8000/api/user/login").post(body).build();
+
+			Response response = client.newCall(request).execute();
+			String user = response.body().string();
+
+			boolean result = (user.isEmpty());
+			Assert.assertTrue(result);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail("Fail to make request");
+		} finally {
+			if (testUserID != -1) {
+				DeleteATestUser(testUserID);
+			}
+		}
+	}
+	
+	@Test
+	public void LoginUserPassTest() {
+		long testUserID = -1;
+		try {
+			// Create user
+			testUserID = CreateATestUser();
+
+			if (testUserID == -1) {
+				fail("Fail to make request");
+			}
+
+			// Check if wrong pass cannot login
+			LoginForm loginForm = new LoginForm();
+			loginForm.setUsername(TestUserName);
+			loginForm.setPassword(TestPassword);
+			
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = Obj.writeValueAsString(loginForm);
+
+			OkHttpClient client = new OkHttpClient();
+
+			MediaType mediaType = MediaType.parse("application/json");
+			RequestBody body = RequestBody.create(mediaType, jsonStr);
+			Request request = new Request.Builder().url("http://localhost:8000/api/user/login").post(body).build();
+
+			Response response = client.newCall(request).execute();
+			User user = new ObjectMapper().readValue(response.body().string(), User.class);
+
+			boolean result = (user != null);
+			Assert.assertTrue(result);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail("Fail to make request");
+		} finally {
+			if (testUserID != -1) {
+				DeleteATestUser(testUserID);
+			}
+		}
+	}
 }
