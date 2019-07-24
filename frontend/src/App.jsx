@@ -21,7 +21,7 @@ class App extends React.Component {
 		App.changeToProfileView = App.changeToProfileView.bind(this);
 		App.changeToLoginView = App.changeToLoginView.bind(this);
 		App.goToVacationRequest = App.goToVacationRequest.bind(this);
-
+		App.turnOffVacationRequest = App.turnOffVacationRequest.bind(this)
 	}
 
 	changeToRegisterView() {
@@ -48,6 +48,10 @@ class App extends React.Component {
 		console.log("goToVacationRequest")
 		this.setState({ isSetVacationOpen: true });
 		console.log(this);
+	}
+
+	static turnOffVacationRequest() {
+		this.setState({ isSetVacationOpen: false });
 	}
 
 	render() {

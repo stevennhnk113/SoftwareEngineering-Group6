@@ -38,7 +38,7 @@ export class VacationRequest extends Component {
         App.goToVacationRequest();
     }
     onCancel(e) {
-        App.goToVacationRequest();
+        App.turnOffVacationRequest()
     }
     async onRequest() {
         var vacation = {
@@ -50,7 +50,7 @@ export class VacationRequest extends Component {
             "scheduleDetail": ""
         }
         await ScheduleControllerObj.CreateSchedule(vacation)
-        //App.turnOffVacationRequest();
+        App.turnOffVacationRequest();
         HomeView.refreshScheduleStatic();
     }
     render() {
