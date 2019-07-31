@@ -74,7 +74,7 @@ export class BaseController {
 		console.log(ServerString + restApi);
 
 		var options = {
-			method: 'PuT',
+			method: 'PUT',
 			url: ServerString + restApi,
 			headers:
 			{

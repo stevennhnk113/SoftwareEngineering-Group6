@@ -41,9 +41,10 @@ export class VacationRequest extends Component {
         App.turnOffVacationRequest()
     }
     async onRequest() {
+		console.log(this.state);
         var vacation = {
-            "startTime": (new Date(this.state.start)).getTime(),
-            "endTime": (new Date(this.state.end)).getTime(),
+            "startTime": (new Date(this.state.start + " 0:00:00")).getTime(),
+            "endTime": (new Date(this.state.end + " 0:00:00")).getTime(),
             "scheduleType": "Vacation Request",
             "scheduleBy": UsercontrollerObj._User.id,
             "scheduleFor": UsercontrollerObj._User.id,

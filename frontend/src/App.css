@@ -1,3 +1,9 @@
+/* html body #root {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} */
+
 .login-form {
   width: 100%;
   max-width: 500px;
@@ -6,8 +12,8 @@
 }
 
 .wrapper {
-  height: 100vh;
   width: 100%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;

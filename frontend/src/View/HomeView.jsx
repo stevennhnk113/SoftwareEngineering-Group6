@@ -117,7 +117,8 @@ export class HomeView extends React.Component {
         return toSaveSchedule;
     }
     async refreshSchedule() {
-        var scheudules = await ScheduleControllerObj.GetUserScheduleByID(this.CurrentDisplayCalendarUserID);
+		var scheudules = await ScheduleControllerObj.GetUserScheduleByID(this.CurrentDisplayCalendarUserID);
+		console.log(scheudules);
         this.setState({ Schedules: scheudules });
     }
     static async refreshScheduleStatic() {
@@ -199,9 +200,9 @@ export class HomeView extends React.Component {
             )
         }
         return (
-            <div>
+            <div style={Styles.container}>
                 {acceptRejectContainer}
-                <MainNavbar></MainNavbar>
+                <MainNavbar hasRequestTimeOff={true}></MainNavbar>
                 <DragAndDropCalendar
                     localizer={localizer}
                     events={this.state.Schedules}
@@ -252,4 +253,11 @@ var AcceptRejectContainer = {
     alignItems: "center",
     zIndex: 1,
     backgroundColor: "rgb(255, 255, 255, 0.8)",
+}
+
+const Styles = {
+	container: {
+		height: "100%",
+		width: "100%"
+	}
 }
