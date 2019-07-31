@@ -67,7 +67,8 @@ export class MainNavbar extends React.Component {
 	}
 
 	logout() {
-		App.changeToLoginView();
+		window.location.reload();
+		// App.changeToLoginView();
 	}
 
 	onUserMenuClick(id) {
@@ -81,6 +82,7 @@ export class MainNavbar extends React.Component {
 
 
 		var dropdowncontainer;
+		var requestTimeOffContainer;
 		// Dropdown
 		if (user.position == "Manager" && this.state.users != null) {
 			var dropdownItems = [];
@@ -108,6 +110,8 @@ export class MainNavbar extends React.Component {
 					</DropdownMenu>
 				</Dropdown>
 			);
+		} else {
+			requestTimeOffContainer = (this.props.hasRequestTimeOff && <Button onClick={this.goToVacationRequest} href="#">Request Time Off</Button>);
 		}
 
 		return (
@@ -117,10 +121,11 @@ export class MainNavbar extends React.Component {
 				<Collapse isOpen={this.state.isOpen} navbar>
 				
 					<Nav className="ml-auto" navbar>
-					<Button onClick={this.goToVacationRequest} href="#">Request Time Off</Button>
+						{requestTimeOffContainer}
 						<NavItem>
 							<NavLink onClick={this.goToProfileView} href="#">My Profile</NavLink>
 							<NavLink onClick={this.logout} href="#">Log out</NavLink>
+							{(this.props.hasGoBack && <NavLink onClick={() => App.changeToHomeView()} href="#">Go back</NavLink>)}
 						</NavItem>
 					</Nav>
 				</Collapse>
