@@ -54,6 +54,14 @@ class UserController extends BaseController {
 		console.log(users);
 		return users;
 	}
+
+	async UpdateUser(user) {
+		var restApi = "/api/user/" + user.id.toString();
+
+		var users = await this.Put(restApi, user);
+		console.log(users);
+		return users;
+	}
 }
 
 var UsercontrollerObj = new UserController();
