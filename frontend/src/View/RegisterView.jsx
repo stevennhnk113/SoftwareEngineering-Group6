@@ -26,6 +26,15 @@ export class RegisterView extends React.Component {
 	}
 
 	async onRegisterPress() {
+		if (this.state.firstName === "" ||
+			this.state.lastName === "" ||
+			this.state.userName === "" ||
+			this.state.position === "" ||
+			this.state.password === "") {
+				this.setState({error: true})
+				return;
+		}
+
 		var user = {
 			firstName: this.state.firstName,
 			lastName: this.state.lastName,
@@ -135,19 +144,6 @@ export class RegisterView extends React.Component {
 
 						<Button onClick={() => this._loginButtonPress()} className="btn-lg btn-dark btn-block">Login</Button>
 						<Button onClick={() => this.onRegisterPress()} className="btn-lg btn-dark btn-block">Register</Button>
-
-						{/* <div className="social text-center">
-                            Or continue with your social account
-                        </div>
-
-                        <div className="faceLogo">
-                            <FacebookLoginButton className="mt-3 mb-3" />
-                        </div>
-                        <div className="social text-center">
-                            <a href="/sign-up">Sign up</a>
-                            <span className="p-2">|</span>
-                            <a href="/forgot-password">Forgot Password</a>
-                        </div> */}
 					</Form>
 				</div>
 			</div>

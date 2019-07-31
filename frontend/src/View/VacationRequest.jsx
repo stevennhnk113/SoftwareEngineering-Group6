@@ -41,6 +41,7 @@ export class VacationRequest extends Component {
         App.turnOffVacationRequest()
     }
     async onRequest() {
+		console.log(this.state);
         var vacation = {
             "startTime": (new Date(this.state.start)).getTime(),
             "endTime": (new Date(this.state.end)).getTime(),
